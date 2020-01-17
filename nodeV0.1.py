@@ -6,14 +6,14 @@ import hashlib as hlib
 import subprocess
 import datetime as date
 import re 
-​
+
 #For the ftp section
 from ftplib import FTP
-​
+
 def startup():
     whoami = getpass.getuser()
     print("The current user is: " + whoami + "\n")
-​
+
     #This will search for the /node directory
     nodeDIR = "/home/" + whoami + "/node"
     if path.exists(nodeDIR):
@@ -43,7 +43,7 @@ def startup():
         else:
             print("Please type either Yes or No")
             startup()
-​
+
 def main():
     dirpath = os.getcwd()
     print("Current Directory is: " + dirpath)
@@ -60,7 +60,7 @@ def main():
     else:
         print("Please type either Yes or No\n")
         main()
-​
+
 def network():
     hostname = "www.google.com"
     string = "ping -c 1 " + hostname
@@ -93,7 +93,7 @@ def network():
         repository()
     else:
         print("Please print either yes or no\n")
-​
+
 def repository():
     print("Would you like to synchronize the Blockchain?\n")
     Sync = input("Please enter Yes or No\n")
@@ -115,7 +115,7 @@ def repository():
         print("Passive mode may be implemented to download votes but not")
         print("post any.\n\n")
         exit(1)
-​
+
 def all_nodes():
     N1 = "127.0.0.1"
     N2 = "10.0.0.98"
@@ -140,7 +140,7 @@ def all_nodes():
         print("Responce from " + N2)
     else:
         print("No responce from " + N2)
-​
+
     os.system("ping -c 1 " + N3)
     response = os.system("ping -c 1 " + N3)
     if response == 0:
@@ -148,14 +148,14 @@ def all_nodes():
         print("Responce from " + N3)
     else:
         print("No responce from " + N3)
-​
+
     print("There is " + str(cn) + " node(s) on the network")
     skip()
-​
+
 def FTP():
     ftp = FTP('10.0.0.237')
     ftp.login()
-​
+
 def skip():
     print("\n\nAll Votes will be posted to /node\n")
     print("The Voter ID will be hashed and the timestamp &")
@@ -165,13 +165,13 @@ def skip():
     print("\nWould you like to vote?")
     print("\nYes/No")
     entryq = str(input())
-​
+
     if entryq == "Yes":
         cast()
         
     elif entryq != "No":
         exit(1)
-​
+
     else:
         print("Please enter Yes or No\n")
         skip()
@@ -184,7 +184,7 @@ def cast():
     print("Example: XXXX\n")
     VIDe = str(input())
     con = "1234567890"
-​
+
     if VIDe == "5555":
         print("PASS")
         VID = VIDe
@@ -203,7 +203,7 @@ def cast():
     elif VIDe != "5555":
         print("VID not Recognized. Please Try again.")
         exit(1)
-​
+
 def vote():
     sha = hlib.sha256()
     ts = date.datetime.now()
@@ -218,14 +218,14 @@ def vote():
     whoami = getpass.getuser()
     nodeDIR = "/home/" + whoami + "/node/"
     if path.exists(nodeDIR):
-​
+
         current_node = []
         files = os.listdir(nodeDIR)
         files.sort()
         for filename in files:
             print(filename)
             filename = current_node.append(filename)
-​
+
         if current_node != []:
             last_file = str(current_node[-1])
             print("\nThe last file was: " + last_file)
@@ -239,7 +239,7 @@ def vote():
             if whoami == "n1":
                 os.system("scp /home/n1/node/vote%s.vt n2@10.0.2.5:/home/n2/node/" % num2)
                 os.system("scp /home/n1/node/vote%s.vt n3@10.0.2.15:/home/n3/node/" % num2)
-​
+
             elif whoami == "n2":
                 os.system("scp /home/n2/node/vote%s.vt n1@10.0.2.6:/home/n1/node/" % num2)
                 os.system("scp /home/n2/node/vote%s.vt n3@10.0.2.15:/home/n3/node/" % num2)
@@ -260,7 +260,7 @@ def vote():
             if whoami == "n1":
                 os.system("scp /home/n1/node/vote1.vt n2@10.0.2.5:/home/n2/node/")
                 os.system("scp /home/n1/node/vote1.vt n3@10.0.2.15:/home/n3/node/")
-​
+
             elif whoami == "n2":
                 os.system("scp /home/n2/node/vote1.vt n1@10.0.2.6:/home/n1/node/")
                 os.system("scp /home/n2/node/vote1.vt n3@10.0.2.15:/home/n3/node/")
@@ -282,5 +282,8 @@ def vote():
         print("\nDirectory: Not Found\n")
         print("Please run the setup wizard")
         exit(1)
-​
+
 main()
+
+   
+   
