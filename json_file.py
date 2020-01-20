@@ -5,7 +5,7 @@ import json
 
 file_path = "./"
 file_name = "m.json" 
- 
+
 class kubicleJson:
 
     def __init__():

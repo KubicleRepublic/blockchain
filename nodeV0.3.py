@@ -9,10 +9,15 @@ import re
 
 #from module import class
 from json_file import kubicleJson
+<<<<<<< HEAD
 
 #Loads the blockchain
 #This will be turned into a function
 #That scans for json_file.py and m.json
+=======
+import pprint
+import json
+>>>>>>> 0ab3523bde715115d7454adc4e868a872ff86c2a
 File = kubicleJson.load()
 
 whoami = getpass.getuser()
@@ -66,6 +71,13 @@ def network():
     pass
 
 def vote(File):
+<<<<<<< HEAD
+=======
+    print("voting..")
+    
+    chain = File["chain"]
+    
+>>>>>>> 0ab3523bde715115d7454adc4e868a872ff86c2a
     #Example VID. This cannot be clear text.
     VID = "5555"
     sha = hlib.sha256()
@@ -79,10 +91,40 @@ def vote(File):
     vote = 'a'
 
     #Here the File.json attributes are assigned
+<<<<<<< HEAD
     File['VIDh'] = VIDh
     File['ts'] = ts
     File['vote'] = vote
     
+=======
+   
+    # imp1 
+    block = chain[0]
+    block['VIDh'] = VIDh
+    block['ts'] = str(ts)
+    block['vote'] = vote
+        
+    # 1 item
+    VID = "6666"
+    sha = hlib.sha256()
+    sha.update((str(VID).encode('utf-8')))
+    VIDh = sha.hexdigest()
+    
+    print(type(chain[0]))
+    #2
+    newBlock = {
+        "VIDh": VIDh,
+        "ts": str(date.datetime.now()),
+        "vote": 'b'
+    }
+    
+    #list
+    chain.append(newBlock)
+        
+    File["chain"] = chain
+    
+    kubicleJson.write(File)
+>>>>>>> 0ab3523bde715115d7454adc4e868a872ff86c2a
     
  
 def config():
