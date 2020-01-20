@@ -31,7 +31,7 @@ print(myData)
 
 kubicleJson.write(myData)
 
-mockOn = 1 #1 or 0
+mockOn = 0 #1 or 0
 if mockOn:
     kubicleJson.write( 
     {
