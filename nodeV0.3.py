@@ -87,35 +87,26 @@ def vote(File):
     vote = 'a'
 
     #Here the File.json attributes are assigned
-
-    # imp1 
     block = chain[0]
-    block['VIDh'] = VIDh
-    block['ts'] = str(ts)
-    block['vote'] = vote
+    if block['VIDh'] == "" and block['ts'] == "" and block['vote'] == "":
+        block['VIDh'] = VIDh
+        block['ts'] = str(ts)
+        block['vote'] = vote
         
-    # 1 item
-    VID = "6666"
-    sha = hlib.sha256()
-    sha.update((str(VID).encode('utf-8')))
-    VIDh = sha.hexdigest()
-    
-    print(type(chain[0]))
-    #2
-    newBlock = {
-        "VIDh": VIDh,
-        "ts": str(date.datetime.now()),
-        "vote": 'b'
-    }
-    
-    #list
-    chain.append(newBlock)
+        File["chain"] = chain
+        kubicleJson.write(File)
+    else:
+        index = (len(chain)) + 1
         
-    File["chain"] = chain
-    
-    kubicleJson.write(File)
-    
- 
+        block['VIDh'] = VIDh
+        block['ts'] = str(ts)
+        block['vote'] = vote
+        chain.append(block)
+        
+        File["chain"] = chain
+        kubicleJson.write(File)
+        
+
 def config():
     #This can access the conn.conf file
     #may read all accessible IPs
