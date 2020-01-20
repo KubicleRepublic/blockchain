@@ -1,7 +1,9 @@
 import json
 
 #file_path = "/home/user/node/"
-file_path = "/home/user/git/kubicleRepublic/blockchain/"
+#file_path = "/home/user/git/kubicleRepublic/blockchain/"
+
+file_path = "./"
 file_name = "kubicle.json" 
  
 class kubicleJson:

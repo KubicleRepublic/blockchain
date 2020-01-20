@@ -1,25 +1,25 @@
 {
     "chain": [
         {
-            "candidate": "2",
-            "merkleroot": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
-            "hashid": "genesis",
             "index": 0,
-            "timestamp": 1541152127213
+            "timestamp": 1541152127213,
+            "candidate": "2",
+            "hashid": "genesis",
+            "merkleroot": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"
         },
         {
-            "candidate": "3",
-            "merkleroot": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
-            "hashid": "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
             "index": 1,
-            "timestamp": 1541152127214
+            "timestamp": 1541152127214,
+            "candidate": "3",
+            "hashid": "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
+            "merkleroot": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"
         },
         {
-            "candidate": "3",
-            "merkleroot": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
-            "hashid": "000000000019d6689c085ae1658abcf5463252cdff131313f31fd3fb3f1b60a8ce26f",
             "index": 2,
-            "timestamp": 1541152127214
+            "timestamp": 1541152127214,
+            "candidate": "3",
+            "hashid": "000000000019d6689c085ae1658abcf5463252cdff131313f31fd3fb3f1b60a8ce26f",
+            "merkleroot": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"
         }
     ]
 }
