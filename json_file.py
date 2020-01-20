@@ -4,7 +4,7 @@ import json
 #file_path = "/home/e/Desktop/SAIT/Capstone/blockchain/"
 
 file_path = "./"
-file_name = "m.json" 
+file_name = "m.json"  
 
 class kubicleJson:
 
