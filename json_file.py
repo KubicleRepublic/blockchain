@@ -1,10 +1,10 @@
 import json
 
-#file_path = "/home/user/node/"
-#file_path = "/home/user/git/kubicleRepublic/blockchain/"
+#file_path = "/home/e/node/"
+#file_path = "/home/e/Desktop/SAIT/Capstone/blockchain/"
 
 file_path = "./"
-file_name = "kubicle.json" 
+file_name = "m.json" 
  
 class kubicleJson:
 

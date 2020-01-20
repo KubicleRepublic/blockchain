@@ -7,11 +7,20 @@ import hashlib as hlib
 import datetime as date
 import re
 
+#from module import class
+from json_file import kubicleJson
+
+#Loads the blockchain
+#This will be turned into a function
+#That scans for json_file.py and m.json
+File = kubicleJson.load()
+
 whoami = getpass.getuser()
 nodeDIR = "/home/" + whoami + "/node"
 
 def startup():
-    print("Kubicle Systems\nBlockchain E-Voting\nV0.3\n")
+    print("Kubicle Systems\nBlockchain E-Voting\nV0.3\n\nLanguage:")
+    print("Python 3\nJSON\n")
     if path.exists(nodeDIR):
         options()
               
@@ -47,7 +56,7 @@ def options():
     if select == "1":
         network()
     elif select == "2":
-        vote()
+        vote(File)
     elif select == "3":
         config()
     else:
@@ -55,9 +64,30 @@ def options():
 
 def network():
     pass
-def vote():
-    pass
+
+def vote(File):
+    #Example VID. This cannot be clear text.
+    VID = "5555"
+    sha = hlib.sha256()
+    sha.update((str(VID).encode('utf-8')))
+    VIDh = sha.hexdigest()
+
+    #This is the timestamp
+    ts = date.datetime.now()
+
+    #This is the vote
+    vote = 'a'
+
+    #Here the File.json attributes are assigned
+    File['VIDh'] = VIDh
+    File['ts'] = ts
+    File['vote'] = vote
+    
+    
+ 
 def config():
+    #This can access the conn.conf file
+    #may read all accessible IPs
     pass
     
 
