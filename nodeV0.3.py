@@ -75,6 +75,8 @@ def vote(File):
 
     #The VIDDB.txt is a simle file that has list of Voter-IDs that it checks.
     #This is the place holder for a stronger database or E-Identity
+    #CURRENTLY BROKEN
+    #if you type "111" you can vote, 111 not a valid VID
     DB = open("/home/" + whoami + "/Desktop/" + "VIDDB.txt", "r+").read().splitlines()
     print(DB)
 
@@ -111,10 +113,13 @@ def vote(File):
         pass
     else:
         Print("Not a valid answer\n")
+        
+    ssize = len(File["chain"])
+    
 
     #Here the File.json attributes are assigned
-    block = chain[0]
-    if block['VIDh'] == "" and block['ts'] == "" and block['vote'] == "":
+    if chain[0]['VIDh'] == "" and chain[0]['ts'] == "" and chain[0]['vote'] == "":
+        block = chain[0]
         block['VIDh'] = VIDh
         block['ts'] = str(ts)
         block['vote'] = vote
@@ -122,13 +127,13 @@ def vote(File):
         File["chain"] = chain
         kubicleJson.write(File)
     else:
-        index = (len(chain)) + 1
-        
+        #index = (len(chain)) + 1
+        block = chain[ssize-1]
         block['VIDh'] = VIDh
         block['ts'] = str(ts)
         block['vote'] = vote
         chain.append(block)
-        
+ 
         File["chain"] = chain
         kubicleJson.write(File)
         
