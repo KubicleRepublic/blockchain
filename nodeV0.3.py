@@ -69,13 +69,32 @@ def network():
     pass
 
 def vote(File):
+    print("What is your Voter-ID?\n")
+    userIn = str(input())
+    u = userIn
 
-    print("voting..")
+    #The VIDDB.txt is a simle file that has list of Voter-IDs that it checks.
+    #This is the place holder for a stronger database or E-Identity
+    DB = open("/home/" + whoami + "/Desktop/" + "VIDDB.txt", "r+").read().splitlines()
+    print(DB)
+
+    for x in range (0, len(DB)):
+        if DB[x].strip('\n') == u:
+            print("User is Registered")
+            pass
+        elif DB[x].strip('\n') != u:
+            if DB[-1] == x:
+                print("User Not Registered.\n")
+                exit(1)
+            else:
+                pass
+        else:
+            print("Input unrecognized. Please Try again.\n")
+            
     
     chain = File["chain"]
-    
     #Example VID. This cannot be clear text.
-    VID = "5555"
+    VID = u
     sha = hlib.sha256()
     sha.update((str(VID).encode('utf-8')))
     VIDh = sha.hexdigest()
@@ -84,7 +103,14 @@ def vote(File):
     ts = date.datetime.now()
 
     #This is the vote
-    vote = 'a'
+    print("Who are you voting for?")
+    print("a.)Darth Vader\nb.)Bugs Bunny\nc.)Steve\nd.)Lady Liberty\n")
+    vote = input()
+    
+    if vote == "a" or vote == "b" or vote == "c" or vote == "d":
+        pass
+    else:
+        Print("Not a valid answer\n")
 
     #Here the File.json attributes are assigned
     block = chain[0]
