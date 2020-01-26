@@ -16,10 +16,18 @@ from json_file import kubicleJson
 
 import pprint
 import json
+import requests #this module allows to send data through the nodes
+from flask import Flask, jsonify, request #Flask allows to always keep listening for data
+app = Flask(__name__)
+
 File = kubicleJson.load()
 
 whoami = getpass.getuser()
 nodeDIR = "/home/" + whoami + "/node"
+
+nodes = [
+    "10.0.0.240:8080"
+]
 
 def startup():
     print("Kubicle Systems\nBlockchain E-Voting\nV0.3\n\nLanguage:")
@@ -65,8 +73,41 @@ def options():
     else:
         options()
 
+is_receiveing = False
+
+@app.route("/broadcast", methods = ['POST', 'GET'])
+def broadcast():
+    #gets the data that was sent
+    data = request.get_json()
+
+    #in case receives multiple messages
+    is_receiveing = data.get('is_receiveing', False)
+    if not is_receiveing:
+        print("receiveing: {}".format(is_receiveing))
+        save_data(data)
+    else:
+        print("Wait a minute")
+        
+    return "Received broadcast!!"
+    
+def save_data(data):
+    kubicleJson.write(data)
+
+@app.route("/network", methods = ['POST'])
 def network():
-    pass
+    #receive data from HTTP request
+    data = request.get_json()
+
+    #sends data to other nodes
+    for node in nodes:
+        print("sending to other nodes")
+        url = "http://{}/broadcast".format(node)        
+        
+        #The line belows check if the node sending is not the same receiveing
+        #data['is_receiveing'] = True
+
+        requests.post(url, json=data)
+    return "Broadcasted successfully"
 
 def vote(File):
     print("What is your Voter-ID?\n")
@@ -144,4 +185,10 @@ def config():
     pass
     
 
-startup()
+#startup()
+
+if __name__ == '__main__':
+    app.debug = True
+    host = os.environ.get('IP', '0.0.0.0')
+    port = int(os.environ.get('PORT', 8080))
+    app.run(host=host, port=port)
