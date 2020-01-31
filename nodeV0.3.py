@@ -68,7 +68,7 @@ class Node:
         if select == "1":
             pass
         elif select == "2":
-            self.vote(self.File)
+            self.vote()
         elif select == "3":
             self.config()
         else:
