@@ -14,7 +14,8 @@ class kubicleJson:
     
     def update_mock_json_file():
         self.write(mock_json_data)
-     
+    
+    @staticmethod
     def load():
         #File I/O Open function for read data from JSON File
         with open(file_path + file_name) as file_object:
