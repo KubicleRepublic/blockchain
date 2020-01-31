@@ -68,7 +68,7 @@ class Node:
         if select == "1":
             pass
         elif select == "2":
-            self.vote(File)
+            self.vote(self.File)
         elif select == "3":
             self.config()
         else:
@@ -105,7 +105,7 @@ class Node:
                 print("Input unrecognized. Please Try again.\n")
                 
         
-        chain = File["chain"]
+        chain = self.File["chain"]
         #Example VID. This cannot be clear text.
         VID = u
         sha = hlib.sha256()
@@ -148,8 +148,8 @@ class Node:
             block['vote'] = vote
             chain.append(block)
     
-            File["chain"] = chain
-            kubicleJson.write(File)
+            self.File["chain"] = chain
+            kubicleJson.write(self.File)
             
 
     def config():

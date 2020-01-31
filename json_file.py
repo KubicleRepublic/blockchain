@@ -22,7 +22,8 @@ class kubicleJson:
             # store file data in object
             data = json.load(file_object)
             return data
-            
+
+    @staticmethod        
     def write(data):
         with open(file_path + file_name, 'w', encoding='utf-8') as file_object:
             # store file data in object
