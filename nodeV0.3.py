@@ -88,9 +88,10 @@ class Node:
         #This is the place holder for a stronger database or E-Identity
         #CURRENTLY BROKEN
         #if you type "111" you can vote, 111 not a valid VID
-        DB = open("/home/" + self.whoami + "/Desktop/" + "VIDDB.txt", "r+").read().splitlines()
-        print(DB)
-
+        
+	#DB = open("/home/" + self.whoami + "/Desktop/" + "VIDDB.txt", "r+").read().splitlines()
+        #print(DB)
+	"""
         for x in range (0, len(DB)):
             if DB[x].strip('\n') == u:
                 print("User is Registered")
@@ -107,6 +108,8 @@ class Node:
         
         chain = self.File["chain"]
         #Example VID. This cannot be clear text.
+
+	"""
         VID = u
         sha = hlib.sha256()
         sha.update((str(VID).encode('utf-8')))
