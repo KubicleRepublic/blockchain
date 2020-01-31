@@ -20,8 +20,9 @@ import json
 class Node:
 
     nodes = [
-        "10.0.0.240:8080"
+        "10.0.0.11:8080"
     ]
+    #nodes = ["10.0.1.{}".format(x) for x in range(11,30)
 
     def __init__(self):
         self.File = kubicleJson.load()
@@ -33,7 +34,7 @@ class Node:
         print("Kubicle Systems\nBlockchain E-Voting\nV0.3\n\nLanguage:")
         print("Python 3\nJSON\n")
         if path.exists(self.nodeDIR):
-            options()
+            self.options()
                 
         else:
             print("Directory: Not Found\n")
@@ -65,13 +66,13 @@ class Node:
 
         select = str(input())
         if select == "1":
-            network()
+            pass
         elif select == "2":
-            vote(File)
+            self.vote(File)
         elif select == "3":
-            config()
+            self.config()
         else:
-            options()
+            self.options()
 
     is_receiveing = False
         
