@@ -132,7 +132,7 @@ class Node:
         
 
         #Here the File.json attributes are assigned
-        if chain[0]['VIDh'] == "" and chain[0]['ts'] == "" and chain[0]['vote'] == "":
+        if chain[0]['VIDh'] == '' and chain[0]['ts'] == "" and chain[0]['vote'] == "":
             block = chain[0]
             block['VIDh'] = VIDh
             block['ts'] = str(ts)
