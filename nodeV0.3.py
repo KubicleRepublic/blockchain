@@ -143,7 +143,7 @@ class Node:
             self.kubicleJson.write(self.File)
 
             #broadcast the data to other nodes
-            send_broadcast(block)
+            self.send_broadcast(block)
         else:
             #index = (len(chain)) + 1
             block = chain[ssize-1]
