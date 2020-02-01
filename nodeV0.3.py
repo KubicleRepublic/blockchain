@@ -8,7 +8,7 @@ import datetime as date
 import re
 
 #from module import class
-from json_file import kubicleJson
+from json_file import KubicleJson
 
 #Loads the blockchain
 #This will be turned into a function
@@ -25,6 +25,7 @@ class Node:
     #nodes = ["10.0.1.{}".format(x) for x in range(11,30)
 
     def __init__(self):
+        kubicleJson = KubicleJson()
         self.File = kubicleJson.load()
         self.whoami = getpass.getuser()
         self.nodeDIR = "/home/" + self.whoami + "/node"
