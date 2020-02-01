@@ -107,9 +107,10 @@ class Node:
                     print("Input unrecognized. Please Try again.\n")
                     
             
-            chain = self.File["chain"]
             #Example VID. This cannot be clear text.
         """
+        chain = self.File["chain"]
+        
         VID = u
         sha = hlib.sha256()
         sha.update((str(VID).encode('utf-8')))
