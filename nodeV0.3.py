@@ -90,26 +90,26 @@ class Node:
         #CURRENTLY BROKEN
         #if you type "111" you can vote, 111 not a valid VID
         
-	#DB = open("/home/" + self.whoami + "/Desktop/" + "VIDDB.txt", "r+").read().splitlines()
+	    #DB = open("/home/" + self.whoami + "/Desktop/" + "VIDDB.txt", "r+").read().splitlines()
         #print(DB)
-	"""
-        for x in range (0, len(DB)):
-            if DB[x].strip('\n') == u:
-                print("User is Registered")
-                pass
-            elif DB[x].strip('\n') != u:
-                if DB[-1] == x:
-                    print("User Not Registered.\n")
-                    exit(1)
-                else:
+        """
+            for x in range (0, len(DB)):
+                if DB[x].strip('\n') == u:
+                    print("User is Registered")
                     pass
-            else:
-                print("Input unrecognized. Please Try again.\n")
-                
-        
-        chain = self.File["chain"]
-        #Example VID. This cannot be clear text.
-	"""
+                elif DB[x].strip('\n') != u:
+                    if DB[-1] == x:
+                        print("User Not Registered.\n")
+                        exit(1)
+                    else:
+                        pass
+                else:
+                    print("Input unrecognized. Please Try again.\n")
+                    
+            
+            chain = self.File["chain"]
+            #Example VID. This cannot be clear text.
+        """
         VID = u
         sha = hlib.sha256()
         sha.update((str(VID).encode('utf-8')))
