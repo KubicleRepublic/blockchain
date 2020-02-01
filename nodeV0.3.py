@@ -25,8 +25,8 @@ class Node:
     #nodes = ["10.0.1.{}".format(x) for x in range(11,30)
 
     def __init__(self):
-        kubicleJson = KubicleJson()
-        self.File = kubicleJson.load()
+        self.kubicleJson = KubicleJson()
+        self.File = self.kubicleJson.load()
         self.whoami = getpass.getuser()
         self.nodeDIR = "/home/" + self.whoami + "/node"
         
@@ -78,7 +78,7 @@ class Node:
     is_receiveing = False
         
     def save_data(self, data):
-        kubicleJson.write(data)
+        self.kubicleJson.write(data)
 
     def vote(self):
         print("What is your Voter-ID?\n")
@@ -140,7 +140,7 @@ class Node:
             block['vote'] = vote
             
             File["chain"] = chain
-            kubicleJson.write(File)
+            self.kubicleJson.write(File)
 
             #broadcast the data to other nodes
             send_broadcast(block)
@@ -153,7 +153,7 @@ class Node:
             chain.append(block)
     
             self.File["chain"] = chain
-            kubicleJson.write(self.File)
+            self.kubicleJson.write(self.File)
             
 
     def config():
