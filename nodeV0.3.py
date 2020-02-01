@@ -140,7 +140,7 @@ class Node:
             block['vote'] = vote
             
             self.File["chain"] = chain
-            self.kubicleJson.write(File)
+            self.kubicleJson.write(self.File)
 
             #broadcast the data to other nodes
             send_broadcast(block)
