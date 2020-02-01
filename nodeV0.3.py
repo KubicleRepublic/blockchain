@@ -139,7 +139,7 @@ class Node:
             block['ts'] = str(ts)
             block['vote'] = vote
             
-            File["chain"] = chain
+            self.File["chain"] = chain
             self.kubicleJson.write(File)
 
             #broadcast the data to other nodes
