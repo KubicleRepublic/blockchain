@@ -6,6 +6,7 @@ import requests #this module allows to send data through the nodes
 import imp
 node = imp.load_source('node', 'nodeV0.3.py')
 from node import Node
+from argparse import ArgumentParser
 
 app = Flask(__name__)
 CORS(app) #CORS allows other nodes to communicate between each other
@@ -48,7 +49,18 @@ def broadcast():
 
 
 if __name__ == '__main__':
+    #default host and port
+    default_host = '0.0.0.0'
+    default_port = '8080'
+
+    #settings arguments from commandline for Dev purposes
+    parser = ArgumentParser()
+    parser.add_argument("-H", "--host", help="Hostname of the Flask app " + "[default %s]" % default_host, default=default_host)
+    parser.add_argument("-P", "--port", help="Port for the Flask app " + "[default %s]" % default_port, default=default_port)
+    
+    args = parser.parse_args()
+
     app.debug = True
-    host = os.environ.get('IP', '0.0.0.0')
-    port = int(os.environ.get('PORT', 8080))
-    app.run(host=host, port=port)
+    #host = os.environ.get('IP', '0.0.0.0')
+    #port = int(os.environ.get('PORT', 8080))
+    app.run(host=args.host, port=args.port)
