@@ -1,11 +1,9 @@
 import os
-import os.path
 from os import path
 
 import getpass
 import hashlib as hlib
 import datetime as date
-import re
 
 #from module import class
 from json_file import KubicleJson
@@ -16,20 +14,25 @@ from json_file import KubicleJson
 
 import pprint
 import json
+from pathlib import Path
+import requests
+
+from flask import jsonify
 
 class Node:
 
     nodes = [
-        "10.0.0.11:8080"
+        "127.0.0.1:8080",
+        "127.0.0.1:8081"
     ]
-    #nodes = ["10.0.1.{}".format(x) for x in range(11,30)
 
-    def __init__(self):
-        self.kubicleJson = KubicleJson()
-        self.File = self.kubicleJson.load()
-        self.whoami = getpass.getuser()
-        self.nodeDIR = "/home/" + self.whoami + "/node"
-        
+    home = str(Path.home())
+
+    def __init__(self, nodeName="node"):
+        self.whoami = getpass.getuser() #it's not being used, try to delete it later
+        self.nodeDIR = self.home + "/" + nodeName + "/"
+        self.kubicleJson = KubicleJson(file_path=self.nodeDIR)
+        self.File = self.kubicleJson.load()        
 
     def startup(self):
         print("Kubicle Systems\nBlockchain E-Voting\nV0.3\n\nLanguage:")
@@ -42,7 +45,7 @@ class Node:
             print("Would you like to create node directory?\n")
             answer = self.yesno()
             if answer == "yes":
-                os.mkdir("/home/" + self.whoami + "/node")
+                os.mkdir(self.nodeDIR)
             elif answer == "no":
                 exit(1)
                 
@@ -154,21 +157,29 @@ class Node:
     
             self.File["chain"] = chain
             self.kubicleJson.write(self.File)
-            
+            self.send_broadcast(block)
 
     def config():
         #This can access the conn.conf file
         #may read all accessible IPs
         pass
 
-    def send_broadcast(data):
+    def send_broadcast(self, data):
         #sends data to other nodes
-        for node in nodes:
+        for node in self.nodes:
             print("sending to other nodes")
+            print(data)
             url = "http://{}/broadcast".format(node)        
             
             #The line belows check if the node sending is not the same receiveing
             #data['is_receiveing'] = True
 
-            requests.post(url, json=data)
+            #Content type must be included in the header
+            header = {"content-type": "application/json"}
+
+            #Performs a POST on the specified url to get the service ticket
+            response = requests.post(url,data=json.dumps(data), headers=header, verify=False)
+
+            print(response.json)
+            print("---------")
         return "Broadcasted successfully"

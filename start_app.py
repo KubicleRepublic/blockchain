@@ -11,18 +11,18 @@ from argparse import ArgumentParser
 app = Flask(__name__)
 CORS(app) #CORS allows other nodes to communicate between each other
 
-nodes = [
-    "10.0.0.240:8080"
-]
+#default host and port
 
 @app.route("/", methods=["GET"])
 def get_ui():
     return send_from_directory('ui', 'node.html')
 
-@app.route("/broadcast", methods = ['POST', 'GET'])
+@app.route("/broadcast", methods = ['POST'])
 def broadcast():
     #gets the data that was sent
-    data = request.get_json()
+    data = request.get_json(force=True)
+    print(data)
+    print("test")
 
     if not data:
         response = {"msg": "No data"}
@@ -33,34 +33,34 @@ def broadcast():
     # return error msg
     #  
     global node
-    node = Node()
+    node = Node("node" + app.args.port)
     node.save_data(data)
 
-    if success:
-        response = {
-            'message': 'Successfully saved.'
-        }
-        return jsonify(response), 201
-    else:
-        response = {
-            'message': 'failed to save.'
-        }
-        return jsonify(response), 500
+    #if success:
+    response = {
+        'message': 'Successfully saved.'
+    }
+    return jsonify(response), 201
+    # else:
+    #     response = {
+    #         'message': 'failed to save.'
+    #     }
+    #     return jsonify(response), 500
 
 
 if __name__ == '__main__':
-    #default host and port
+    app.debug = True
+    
     default_host = '0.0.0.0'
     default_port = '8080'
-
+    
     #settings arguments from commandline for Dev purposes
     parser = ArgumentParser()
     parser.add_argument("-H", "--host", help="Hostname of the Flask app " + "[default %s]" % default_host, default=default_host)
     parser.add_argument("-P", "--port", help="Port for the Flask app " + "[default %s]" % default_port, default=default_port)
     
-    args = parser.parse_args()
+    app.args = parser.parse_args()
 
-    app.debug = True
     #host = os.environ.get('IP', '0.0.0.0')
     #port = int(os.environ.get('PORT', 8080))
-    app.run(host=args.host, port=args.port)
+    app.run(host=app.args.host, port=app.args.port)
