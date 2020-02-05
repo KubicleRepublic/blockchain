@@ -6,6 +6,10 @@ FILE_NAME = "m.json"
 
 class KubicleJson:
 
+    """
+        Arguments: 
+            FILE_NAME: You can specify different file
+    """
     def __init__(self, file_name=FILE_NAME, file_path=FILE_PATH):
         self.file_name = file_name
         self.file_path = file_path
