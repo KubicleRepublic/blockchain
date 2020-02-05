@@ -1,0 +1,4 @@
+Starting the core voting and websever instructions:
+
+1) Start_app.py
+2) startup.py
