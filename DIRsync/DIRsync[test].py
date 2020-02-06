@@ -99,6 +99,7 @@ def MerkleTree():
 
         for v in len(m.json):
                 vote{v} = str(m.json[v])
+                #This simple looks for first pair.
                 if vote{v} and vote{v + 1} // 2 == %2:
                         sha.update((str(vote{v}).encode('utf-8')) + str(vote{v + 1}).encode('utf-8'))
                         Merklehash{v} = sha.hexdigest()
@@ -122,6 +123,8 @@ def MerkleTreeVerify():
         for file in dir:
                 file = blockfiles.append(file) #This will not have the hash, a dictionary will
                                                #Need to be used for that I think
+                                               
+        #This function checks first 4 vote's hash, and comapres them to block
         if ((m.json[0][1].hash) + (m.json([2][3]).hash)_.hash == blockfile[0].hash:
                 #This compares the first 4 votes' combined hash to the calculated block
                 #from the last function
@@ -129,7 +132,7 @@ def MerkleTreeVerify():
         elif ((m.json[0][1].hash) + (m.json([2][3]).hash)_.hash != blockfile[0].hash:
                 print("Bad block")
         else:
-                print("Something is terribly wrong")                    
+                print("Something is terribly wrong"                    
 
                 
 """
