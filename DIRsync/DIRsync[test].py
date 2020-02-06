@@ -63,6 +63,79 @@ else:
 
 """
 
+"""
+
+def DIRupdate(sync_node, desync_node):
+        #This will update the node in question that is not the same as the 51% or more of the network
+        goodNode = sync_node.readlines()
+        badNode = desync_node.readlines()
+
+        #Two ways to do this
+        #1)Delete entry on node and replace it with good copy from goodNode
+
+        #2)Compare the two strings are update the missing / added parts from the goodNode to the
+        #bad node.
+
+        for x in len(goodNode[0]):
+                if badNode[x] != goodNode[x]:
+                        badNode[VIDh[x]] = goodNode[VIDh[x]]
+                elif badNode[x] == goodNode[x]:
+                        pass
+                elif badNode - If area does not exist:
+                        create area copied from goodNode[x]
+                else:
+                        Print("Somethings wrong")
+
+"""
+
+"""
+import hashlib
+sha = hlib.sha256()
+
+def MerkleTree():
+        f = open("/path/to/file/m.json")
+        #convert m.json file to obj?
+        #May very well already be onj
+
+        for v in len(m.json):
+                vote{v} = str(m.json[v])
+                if vote{v} and vote{v + 1} // 2 == %2:
+                        sha.update((str(vote{v}).encode('utf-8')) + str(vote{v + 1}).encode('utf-8'))
+                        Merklehash{v} = sha.hexdigest()
+
+                        #This creates block if there are 2 merkle hashes
+                        if Merklehash{v} and Merklehash{v+1} // 2 == %2:
+                                sha.update((str(Merklehash{v}).encode('utf-8')) + str(Merklehash{v + 1}).encode('utf-8'))
+                                block{v} = sha.hexdigest()
+                                b = open("/path/to/file/%s" % block{V})
+                                b.write(block{v})
+
+#The logic is not complete with the function above.
+
+#Down below the Merkle tree will attempt to verify the blocks
+blockfiles = []
+
+def MerkleTreeVerify():
+        path = "/path/to/blocks/"
+        files = os.listdir(path):
+        files.sort()
+        for file in dir:
+                file = blockfiles.append(file) #This will not have the hash, a dictionary will
+                                               #Need to be used for that I think
+        if ((m.json[0][1].hash) + (m.json([2][3]).hash)_.hash == blockfile[0].hash:
+                #This compares the first 4 votes' combined hash to the calculated block
+                #from the last function
+                print("Good block\n")
+        elif ((m.json[0][1].hash) + (m.json([2][3]).hash)_.hash != blockfile[0].hash:
+                print("Bad block")
+        else:
+                print("Something is terribly wrong")                    
+
+                
+"""
+
+
+
 
 
 
