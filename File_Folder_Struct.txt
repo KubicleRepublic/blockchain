@@ -2,12 +2,12 @@ Folder Structure:
 
 node8080
    |
-   |------------ 
-   |           |
-   blocks      votes
-   |           |
-   |           |
-   block.txt   m.json
+   |----------------------- 
+   |           |	  |
+   blocks      votes      tempvotes
+   |           |	  |
+   |           |	  |
+   block.txt   m.json     ballotbox.txt
 
 
 File Structure:
@@ -30,3 +30,7 @@ m.json : This will have the VID (Voter ID), timestamp and vote attributes
                 "vote": "a"
         }
 
+ballotbox.txt : The first 8 characters should be the VID, and the final 9th character is the vote.
+		The ballotbox.txt may be read by the node, to then upload the contents to the m.json.
+	
+	e.g. 12345678a
