@@ -25,13 +25,14 @@ $ sudo pip install virtualenv
 ## Installation
 ---------------------
 
-> ### 1) Create a python virtual environment
+### Python virtual environment
 
+- Create virtual env
 ```
 - $python3 -m venv myvenv
 ```
 
-> ### 2) Activate virtual environment
+> ### Activate virtual environment
 On **Windows**:
 
 ```
@@ -44,6 +45,14 @@ $ source myenv/bin/activate
 ```
 
 ### Install dependencies
+```
+$ sudo pip install -r requirements.txt 
+```
+
+> Update requirements.txt
+```
+$ pip freeze > requirements.txt
+```
 
 
 Running your first command
