@@ -29,17 +29,16 @@ $ sudo pip install virtualenv
 
 - Create virtual env
 ```
-> $python3 -m venv myvenv
+$python3 -m venv myvenv
 ```
 
-> ### Activate virtual environment
-On **Windows**:
-
+- Activate virtual environment
+> On **Windows**:
 ```
 $ myenv\Scripts\activate 
 ```
-On **Unix or Mac**:
 
+> On **Unix or Mac**:
 ```
 $ source myenv/bin/activate 
 ```
@@ -49,7 +48,7 @@ $ source myenv/bin/activate
 $ sudo pip install -r requirements.txt 
 ```
 
-> Update requirements.txt
+- Update requirements.txt
 ```
 $ pip freeze > requirements.txt
 ```
