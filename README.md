@@ -9,17 +9,10 @@ Requirements
 python 3.6 (Already installed on Ubuntu 17.10 and 18.04 (Bionic))
 
 pip3
-
-```
-$ sudo apt install python3-pip 
-```
+`$ sudo apt install python3-pip `
 
 python environment
-
-```
-$ sudo pip install virtualenv 
-```
-
+`$ sudo pip install virtualenv `
 
 
 ## Installation
@@ -27,20 +20,11 @@ $ sudo pip install virtualenv
 
 ### Python virtual environment
 - Create virtual env
-```
-$python3 -m venv myvenv
-```
-
+`$python3 -m venv myvenv`
 
 - Activate virtual environment
-> On **Windows**:
-```
-$ myenv\Scripts\activate 
-```
-> On **Unix or Mac**:
-```
-$ source myenv/bin/activate 
-```
+> On **Windows**:`$ myenv\Scripts\activate `
+> On **Unix or Mac**: `$ source myenv/bin/activate `
 
 
 ### Install dependencies
