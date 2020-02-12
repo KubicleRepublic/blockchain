@@ -26,22 +26,22 @@ $ sudo pip install virtualenv
 ---------------------
 
 ### Python virtual environment
-
 - Create virtual env
 ```
 $python3 -m venv myvenv
 ```
+
 
 - Activate virtual environment
 > On **Windows**:
 ```
 $ myenv\Scripts\activate 
 ```
-
 > On **Unix or Mac**:
 ```
 $ source myenv/bin/activate 
 ```
+
 
 ### Install dependencies
 ```
