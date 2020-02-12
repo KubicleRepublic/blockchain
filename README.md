@@ -5,7 +5,7 @@ This it s a project of e-Voting blockchain
 
 
 ## Requirements
---------------------- 
+ 
 python 3.6 (Already installed on Ubuntu 17.10 and 18.04 (Bionic))
 
 pip3
@@ -16,8 +16,7 @@ python environment
 
 
 ## Installation
-
-
+---------------------
 ### Python virtual environment
 - Create virtual env
 `python3 -m venv myvenv`
@@ -36,7 +35,7 @@ $ sudo pip install -r requirements.txt
 ```
 $ pip freeze > requirements.txt
 ```
-
+---------------------
 
 Running your first command
 --------------------------
