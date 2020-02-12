@@ -29,7 +29,7 @@ $ sudo pip install virtualenv
 
 - Create virtual env
 ```
-- $python3 -m venv myvenv
+> $python3 -m venv myvenv
 ```
 
 > ### Activate virtual environment
