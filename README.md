@@ -16,7 +16,7 @@ python environment
 
 
 ## Installation
----------------------
+
 ### Python virtual environment
 - Create virtual env
 `python3 -m venv myvenv`
