@@ -1,4 +1,5 @@
 # blockchain
+=============
 
 This it s a project of e-Voting blockchain
 
@@ -21,13 +22,13 @@ $ sudo pip install virtualenv
 
 
 
-Installation
+## Installation
 ---------------------
 
-1 - Create a python virtual environment
+> ### Create a python virtual environment
 
 ```
-$python3 -m venv myvenv
+- $python3 -m venv myvenv
 ```
 
 2 - activate virtual environment
@@ -46,4 +47,5 @@ $ source myenv/bin/activate
 Running your first command
 --------------------------
 
-*Test*
+
+`pwd`
