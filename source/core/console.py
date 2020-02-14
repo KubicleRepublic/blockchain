@@ -1,34 +1,31 @@
 import os
-import os.path
 from os import path
 
-import getpass
 import hashlib as hlib
 import datetime as date
-import re
 
-#from module import class
-from json_file import kubicleJson
+from json_file import KubicleJson
 
-#Loads the blockchain
-#This will be turned into a function
-#That scans for json_file.py and m.json
-
-import pprint
 import json
+from pathlib import Path
+import requests
 
-class Node:
+from flask import jsonify
 
-    nodes = [
-        "10.0.0.11:8080"
-    ]
-    #nodes = ["10.0.1.{}".format(x) for x in range(11,30)
+import imp
+node = imp.load_source('node', 'node.py') #import files with dot
+from node import Node
 
-    def __init__(self):
-        self.File = kubicleJson.load()
-        self.whoami = getpass.getuser()
-        self.nodeDIR = "/home/" + self.whoami + "/node"
-        
+
+class Console:
+
+    home = str(Path.home())
+
+    def __init__(self, node):
+        self.node = node
+        self.nodeDIR = self.home + "/" + nodeName + "/"
+        self.kubicleJson = KubicleJson(file_path=self.nodeDIR)
+        self.File = self.kubicleJson.load()        
 
     def startup(self):
         print("Kubicle Systems\nBlockchain E-Voting\nV0.3\n\nLanguage:")
@@ -41,10 +38,11 @@ class Node:
             print("Would you like to create node directory?\n")
             answer = self.yesno()
             if answer == "yes":
-                os.mkdir("/home/" + self.whoami + "/node")
+                os.mkdir(self.nodeDIR)
             elif answer == "no":
                 exit(1)
                 
+
     def yesno(self):
         answer = input("[Y/n]")
         if answer == "Yes" or "Y" or "y" or "yes":
@@ -56,6 +54,7 @@ class Node:
         else:
             print("Please answer yes or no.\n")
             self.yesno()
+
 
     def options(self):
         print("Directory: Found\n")
@@ -74,42 +73,14 @@ class Node:
         else:
             self.options()
 
-    is_receiveing = False
-        
-    def save_data(self, data):
-        kubicleJson.write(data)
 
     def vote(self):
         print("What is your Voter-ID?\n")
         userIn = str(input())
         u = userIn
 
-        #The VIDDB.txt is a simle file that has list of Voter-IDs that it checks.
-        #This is the place holder for a stronger database or E-Identity
-        #CURRENTLY BROKEN
-        #if you type "111" you can vote, 111 not a valid VID
-        
-	#DB = open("/home/" + self.whoami + "/Desktop/" + "VIDDB.txt", "r+").read().splitlines()
-        #print(DB)
-	"""
-        for x in range (0, len(DB)):
-            if DB[x].strip('\n') == u:
-                print("User is Registered")
-                pass
-            elif DB[x].strip('\n') != u:
-                if DB[-1] == x:
-                    print("User Not Registered.\n")
-                    exit(1)
-                else:
-                    pass
-            else:
-                print("Input unrecognized. Please Try again.\n")
-                
-        
         chain = self.File["chain"]
-        #Example VID. This cannot be clear text.
-
-	"""
+        
         VID = u
         sha = hlib.sha256()
         sha.update((str(VID).encode('utf-8')))
@@ -132,17 +103,17 @@ class Node:
         
 
         #Here the File.json attributes are assigned
-        if chain[0]['VIDh'] == "" and chain[0]['ts'] == "" and chain[0]['vote'] == "":
+        if chain[0]['VIDh'] == '' and chain[0]['ts'] == "" and chain[0]['vote'] == "":
             block = chain[0]
             block['VIDh'] = VIDh
             block['ts'] = str(ts)
             block['vote'] = vote
             
-            File["chain"] = chain
-            kubicleJson.write(File)
+            self.File["chain"] = chain
+            self.node.save_data(self.File)
 
             #broadcast the data to other nodes
-            send_broadcast(block)
+            self.node.send_broadcast(block)
         else:
             #index = (len(chain)) + 1
             block = chain[ssize-1]
@@ -152,22 +123,13 @@ class Node:
             chain.append(block)
     
             self.File["chain"] = chain
-            kubicleJson.write(self.File)
-            
+            self.kubicleJson.write(self.File)
+            self.node.send_broadcast(block)
 
-    def config():
-        #This can access the conn.conf file
-        #may read all accessible IPs
-        pass
 
-    def send_broadcast(data):
-        #sends data to other nodes
-        for node in nodes:
-            print("sending to other nodes")
-            url = "http://{}/broadcast".format(node)        
-            
-            #The line belows check if the node sending is not the same receiveing
-            #data['is_receiveing'] = True
+if __name__ == "__main__":
+    node = Node()
+    console = Console(node)
+    console.startup()
 
-            requests.post(url, json=data)
-        return "Broadcasted successfully"
+

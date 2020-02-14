@@ -14,8 +14,14 @@ CORS(app) #CORS allows other nodes to communicate between each other
 #default host and port
 
 @app.route("/", methods=["GET"])
+def get_home():
+    return 'This is home!'
+
+
+@app.route("/ui", methods=["GET"])
 def get_ui():
     return send_from_directory('ui', 'node.html')
+
 
 @app.route("/broadcast", methods = ['POST'])
 def broadcast():
