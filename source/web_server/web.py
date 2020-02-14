@@ -8,6 +8,7 @@ from OpenSSL import SSL
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
+
 #principals = Principal(app)
 #admin_permission = Permission(RoleNeed('Admin'))
 
