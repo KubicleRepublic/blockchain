@@ -4,7 +4,7 @@ from collections import defaultdict
 import json
 import os
 import requests
-from OpenSSL import SSL
+#from OpenSSL import SSL
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
@@ -19,25 +19,35 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 @app.route("/")
 def hello():
-    return "hello, proceed to /home"
+    return "hello world, could u proceed to /home"
 
 @app.route("/home")
 def home():
     return render_template('home.html')
 
+
 @app.route("/receive-count", methods=['GET'])
 def receive_count():
 
-    url = 'http://10.187.229.245:8080/get_votes'
+    url = 'http://localhost:8080/get_votes'
     returned = requests.get(url)
     return returned.text
-    
+
+@app.route("/file-reader", methods=['GET'])
+def filereader():
+    # mylines = []
+    # with open ('m.json', 'rt') as myfile:
+    #     for myline in myfile:
+    #         mylines.append(myline)
+    return "hewwo"
+            #return mylines.text
+
 
 @app.route("/vote-submission", methods=['GET','POST'])
 def vote_submission():
     if request.method == 'POST':
 
-            url = 'http://10.187.229.245:8080/ballot'
+            url = 'http://localhost:8080/ballot'
 
            # newcount = defaultdict(int)
 
@@ -60,4 +70,6 @@ def vote_submission():
             # print("----------")
     return response.text
 
-app.run(host='0.0.0.0') #ssl_context='adhoc'
+if __name__ == "__main__":
+    app.run(host='0.0.0.0') #ssl_context='adhoc'
+    #app.run(ssl_context='adhoc') #host='0.0.0.0'
