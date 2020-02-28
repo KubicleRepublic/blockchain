@@ -3,8 +3,6 @@ from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import requests #this module allows to send data through the nodes
 
-import imp
-node = imp.load_source('node', 'nodeV0.3.py')
 from node import Node
 from argparse import ArgumentParser
 
@@ -12,6 +10,20 @@ app = Flask(__name__)
 CORS(app) #CORS allows other nodes to communicate between each other
 
 #default host and port
+
+@app.route("/ballot", methods=["POST"])
+def ballot():
+    data = request.get_data()
+    response = "This is the node response: {}".format(data)
+    print(f"node test {data}")
+    return response
+
+
+@app.route("/get_votes", methods=["GET"])
+def get_votes():
+    result = {'Trump': 5, 'Hillary': 2, 'Andrew': 3, 'Teddy': 2}
+    return result
+
 
 @app.route("/", methods=["GET"])
 def get_home():
