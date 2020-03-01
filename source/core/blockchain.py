@@ -60,6 +60,7 @@ def mine_block():
     #TODO: validate if the votes are valid to be added
     #TODO: broadcast the event of addind a block
     blockchain.append(block)
+    return True
 
 
 def get_vote():
@@ -125,7 +126,8 @@ while waiting_for_input:
         add_vote(vote_id=vote_id, candidate=candidate)
         print(open_votes)
     elif user_choice == "2":
-        mine_block()
+        if mine_block():
+            open_votes = [] #empty outstanding votes after creating the block
     elif user_choice == "3":
         print_blockchain_elements()
     elif user_choice == "h":
