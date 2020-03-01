@@ -18,9 +18,29 @@ and then added to a blockchain whenever this block is mined
 open_votes = [] #outstandinf transactions
 owner = 'Luiz'
 
+candidates = set()
+
 
 def hash_block(block):
     return '-'.join([str(block[key]) for key in block])
+
+
+def get_vote_count():
+    candidate_1 = [[vote['candidate'] for vote in block['votes'] if vote['candidate'] == 1] for block in blockchain]
+    
+    total_votes_1 = 0
+    for candidate in candidate_1:
+        if len(candidate) > 0:
+             total_votes_1 += 1
+
+    candidate_2 = [[vote['candidate'] for vote in block['votes'] if vote['candidate'] == 2] for block in blockchain]
+    
+    total_votes_2 = 0
+    for candidate in candidate_2:
+        if len(candidate) > 0:
+             total_votes_2 += 1
+    
+    return (total_votes_1, total_votes_2)
 
 
 def get_last_blockchain_value():
@@ -146,7 +166,7 @@ while waiting_for_input:
         print_blockchain_elements()
         print("Invalid blockchain")
         break
-
+    print(get_vote_count())
 
 else:
     print("User left!")
