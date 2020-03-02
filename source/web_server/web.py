@@ -33,14 +33,7 @@ def receive_count():
     returned = requests.get(url)
     return returned.text
 
-@app.route("/file-reader", methods=['GET'])
-def filereader():
-    # mylines = []
-    # with open ('m.json', 'rt') as myfile:
-    #     for myline in myfile:
-    #         mylines.append(myline)
-    return "hewwo"
-            #return mylines.text
+
 
 
 @app.route("/vote-submission", methods=['GET','POST'])
