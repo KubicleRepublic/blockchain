@@ -11,6 +11,9 @@ CORS(app) #CORS allows other nodes to communicate between each other
 
 #default host and port
 
+# import pdb
+# pdb.set_trace()
+
 @app.route("/ballot", methods=["POST"])
 def ballot():
     data = request.get_data()

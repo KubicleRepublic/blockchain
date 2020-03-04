@@ -4,7 +4,7 @@ from os import path
 import hashlib as hlib
 import datetime as date
 
-from json_file import KubicleJson
+from json_file import JsonEditor
 
 import json
 from pathlib import Path
@@ -24,7 +24,7 @@ class Console:
     def __init__(self, node):
         self.node = node
         self.nodeDIR = self.home + "/" + nodeName + "/"
-        self.kubicleJson = KubicleJson(file_path=self.nodeDIR)
+        self.kubicleJson = JsonEditor(file_path=self.nodeDIR)
         self.File = self.kubicleJson.load()        
 
     def startup(self):

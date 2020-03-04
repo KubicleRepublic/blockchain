@@ -4,7 +4,7 @@ import os
 FILE_PATH = "./"
 FILE_NAME = "m.json"  
 
-class KubicleJson:
+class JsonEditor:
 
     """
         Arguments: 

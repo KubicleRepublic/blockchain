@@ -6,7 +6,7 @@ import hashlib as hlib
 import datetime as date
 
 #from module import class
-from json_file import KubicleJson
+from jsonEditor import JsonEditor
 
 #Loads the blockchain
 #This will be turned into a function
@@ -30,7 +30,7 @@ class Node:
 
     def __init__(self, nodename="node"):
         self.nodeDIR = self.home + "/" + nodeName + "/"
-        self.kubicleJson = KubicleJson(file_path=self.nodeDIR)
+        self.kubicleJson = JsonEditor(file_path=self.nodeDIR)
         self.File = self.kubicleJson.load()        
         
 

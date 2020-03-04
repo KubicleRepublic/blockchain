@@ -83,6 +83,10 @@ def mine_block():
     return True
 
 
+"""
+creates a vote data:
+Request input ID and candidate from user (Console input)
+"""
 def get_vote():
     """ Returns the input of the user (transaction amount in float format) """
     vote_id = input("Vote ID: ")

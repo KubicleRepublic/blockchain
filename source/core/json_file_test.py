@@ -10,9 +10,9 @@
 # import folder.file as myModule
 # k = myModule.Klasa()
 
-from json_file import KubicleJson
+from jsonEditor import JsonEditor
 
-kubicleJson = KubicleJson(file_name="kubicle.json")
+kubicleJson = JsonEditor(file_name="kubicle.json")
 
 myData = kubicleJson.load()
 originalData = myData
