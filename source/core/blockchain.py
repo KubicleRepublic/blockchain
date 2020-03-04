@@ -33,14 +33,33 @@ def get_vote_count():
         if len(candidate) > 0:
              total_votes_1 += 1
 
+
     candidate_2 = [[vote['candidate'] for vote in block['votes'] if vote['candidate'] == 2] for block in blockchain]
     
     total_votes_2 = 0
     for candidate in candidate_2:
         if len(candidate) > 0:
              total_votes_2 += 1
+
+
+    candidate_3 = [[vote['candidate'] for vote in block['votes'] if vote['candidate'] == 3] for block in blockchain]
     
-    return (total_votes_1, total_votes_2)
+    total_votes_3 = 0
+    for candidate in candidate_3:
+        if len(candidate) > 0:
+             total_votes_3 += 1
+
+
+    candidate_4 = [[vote['candidate'] for vote in block['votes'] if vote['candidate'] == 4] for block in blockchain]
+    
+    total_votes_4 = 0
+    for candidate in candidate_4:
+        if len(candidate) > 0:
+             total_votes_4 += 1
+    
+    votes = { "Donald": total_votes_1, "Hillary": total_votes_2 }
+    return votes
+    #votes["Donald"]
 
 
 def get_last_blockchain_value():
@@ -63,7 +82,7 @@ def add_vote(vote_id, candidate):
         'candidate': candidate
     }
     open_votes.append(vote)
-    
+    return open_votes
 
 #will append the vote to the blockchain
 def mine_block():
@@ -131,7 +150,7 @@ def verify_chain():
     return True #if all the calculated hashes match then blockchain is valid 
 
 
-waiting_for_input = True
+waiting_for_input = False
 
 while waiting_for_input:
     print("\nPlease choose")
