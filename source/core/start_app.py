@@ -2,7 +2,7 @@ import os
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import requests #this module allows to send data through the nodes
-
+import blockchain
 from node import Node
 from argparse import ArgumentParser
 
@@ -19,12 +19,21 @@ def ballot():
     data = request.get_data()
     response = "This is the node response: {}".format(data)
     print(f"node test {data}")
+    #convert the data.candidate into a num
+    #data.EID
+    #data.candidate
+    # blockchain.add_vote(data.EID, data.candidate)
+    open_votes_qt = blockchain.add_vote(1111, 1)
+    print(f"this is open_votes: {open_votes_qt}")
+    if open_votes_qt == 2:
+        blockchain.mine_block()
+    
     return response
 
 
 @app.route("/get_votes", methods=["GET"])
 def get_votes():
-    result = {'Trump': 5, 'Hillary': 2, 'Andrew': 3, 'Teddy': 2}
+    result = blockchain.get_vote_count()
     return result
 
 
