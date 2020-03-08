@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, request
 from collections import defaultdict
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 #from flask. import principal, permission, RoleNeed
 import json
 import os
@@ -9,14 +9,18 @@ import requests
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
-
 #principals = Principal(app)
 #admin_permission = Permission(RoleNeed('Admin'))
 
 # @app.route('/admin')
 # @admin_permission.require()
 # def do_admin_index():
-#     return Response('only if you are admin')
+# return Response('only if you are admin')
+
+#This is where the UPLOADS folder is set
+#Will create script for this later to recognize path
+UPLOAD_FOLDER = "/home/e/Desktop/SAIT/Capstone/blockchain/source/web_server/UPLOADS"
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 @app.route("/")
 def hello():
@@ -62,36 +66,30 @@ def home():
 @app.route('/success', methods =['POST'])
 def success():
     if request.method == 'POST':
-        #If a vote is 'posted' then the file is saved in the dir
-        f = request.files['file']
-        f.save(f.filename)
-
         #This is reading what candidate was voted for
         url = 'http://localhost:8080/ballot'
         electee = request.form["options"]
         print("vote is " + electee)
         Token = {'candidate' : electee}
         response = requests.post(url, data = Token)
+
+        #This reads the "file" attribute
+        f = request.files['file']
+
+        #This works, but it saves in current dir where script is
+        #f.save(f.filename)
+
+        #This Saves script in the UPLOAD_FOLDER
+        f.save(os.path.join(app.config['UPLOAD_FOLDER'], f.filename))
         
         return render_template("success.html", name = f.filename), response.text
     
-    
-
-
 @app.route("/receive-count", methods=['GET'])
 def receive_count():
 
     url = 'http://localhost:8080/get_votes'
     returned = requests.get(url)
     return returned.text
-
-#This is for reading the uploaded file
-
-
-
-
-
-
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0') #ssl_context='adhoc'
