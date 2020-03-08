@@ -2,12 +2,14 @@ import os
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import requests #this module allows to send data through the nodes
-import blockchain
+from blockchain import BlockChain
 from node import Node
 from argparse import ArgumentParser
 
 app = Flask(__name__)
 CORS(app) #CORS allows other nodes to communicate between each other
+
+blockchain = BlockChain()
 
 #default host and port
 
@@ -23,12 +25,14 @@ def ballot():
     #data.EID
     #data.candidate
     # blockchain.add_vote(data.EID, data.candidate)
+
     open_votes_qt = blockchain.add_vote(1111, 1)
     print(f"this is open_votes: {open_votes_qt}")
     if open_votes_qt == 2:
         blockchain.mine_block()
     
-    return response
+    qt = blockchain.get_vote_count()
+    return str(qt)
 
 
 @app.route("/get_votes", methods=["GET"])
@@ -94,3 +98,4 @@ if __name__ == '__main__':
     #host = os.environ.get('IP', '0.0.0.0')
     #port = int(os.environ.get('PORT', 8080))
     app.run(host=app.args.host, port=app.args.port)
+    
