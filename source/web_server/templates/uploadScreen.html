@@ -1,0 +1,21 @@
+<html>
+ <head>
+  <h1>Welcome to E-Voting</h1>
+ </head>
+  <body>
+   
+   <!--This here is the actual token file we are sending--> 
+   <h3> Upload your E-Token here </h3>
+   <i> Voter IDs are so 2000!</i>
+   <form action= "/success" method= "post" enctype="multipart/form-data">
+    <input type="file" name="file" id="file"/>
+
+    <!--Here will be the vote options as radial buttons-->
+    <h3>Choose your candidate:</h3>
+    <input type="radio" name="options" id="option1" value="1"> Ayy Lmao </input><br>
+    <input type="radio" name="options" id="option2" value="2"> ROFL     </input><br>
+    <input type="radio" name="options" id="option3" value="3"> LOL      </input><br>
+    <input type="submit" value="Upload">
+    </form>
+  </body>
+</html>
