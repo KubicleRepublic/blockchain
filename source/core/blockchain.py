@@ -92,15 +92,16 @@ class BlockChain:
             :vote_id: unique id per voter/student
             :candidate: candidate of a list of choices
         """
-        
+        # vote_prepper = blockchain.get_vote_count(votes)
+
         vote = { 
             'vote_id': vote_id, 
             'candidate': candidate
         }
         open_votes.append(vote)
-        open_votes.append(vote)
-        open_votes.append(vote)
-        return open_votes
+        # open_votes.append(vote)
+        # open_votes.append(vote)
+        return open_votes #[vote_ID and candidate in a list]
 
     #will append the vote to the blockchain
     def mine_block(self):

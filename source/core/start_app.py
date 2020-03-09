@@ -26,8 +26,11 @@ def ballot():
     #data.candidate
     # blockchain.add_vote(data.EID, data.candidate)
 
-    open_votes_qt = blockchain.add_vote(1111, 1)
+    # votes_getter = blockchain.get_vote_count()
+    # print(f"this is the votes: {votes_getter}")
+    open_votes_qt = blockchain.add_vote(88888888, 1)
     print(f"this is open_votes: {open_votes_qt}")
+
     if open_votes_qt == 2:
         blockchain.mine_block()
     
