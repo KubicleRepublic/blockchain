@@ -6,7 +6,6 @@ genesis_block = {
     'votes': []
 }
 
-blockchain = [genesis_block]
 
 """
 open_votes[]:
@@ -30,6 +29,8 @@ class CandidateEnum(Enum):
     Putin = 4
 
 class Blockchain:
+    blockchain = [genesis_block]
+    
     def hash_block(self, block):
         return '-'.join([str(block[key]) for key in block])
 
@@ -65,7 +66,7 @@ class Blockchain:
         
         counter = dict()
         
-        for block in blockchain:
+        for block in self.blockchain:
             for vote in block['votes']:
                 key = vote['candidate'] #dictionary key i.e: 1, 2, 3 or 4 (represents the candidate #)
                 counter[key] = counter.get(key, 0) + 1 #votes.get check if the key/candidate has value otherwise sets the initial value to 0 (zero)
@@ -75,9 +76,9 @@ class Blockchain:
 
     def get_last_blockchain_value(self):
         """ Returns the last value of the current blockchain"""
-        if len(blockchain) < 1:
+        if len(self.blockchain) < 1:
             return None
-        return blockchain[-1]
+        return self.blockchain[-1]
 
 
     def add_vote(self, vote_id, candidate):
@@ -97,19 +98,19 @@ class Blockchain:
 
     #will append the vote to the blockchain
     def mine_block(self):
-        last_block = blockchain[-1] #retrieve the previous block of the blockchain
+        last_block = self.blockchain[-1] #retrieve the previous block of the blockchain
         hashed_block = self.hash_block(last_block) #hash the previous block
 
         print(hashed_block)
 
         block = {
             'previous_hash': hashed_block,
-            'index': len(blockchain),
+            'index': len(self.blockchain),
             'votes': open_votes
         }
         #TODO: validate if the votes are valid to be added
         #TODO: broadcast the event of addind a block
-        blockchain.append(block)
+        self.blockchain.append(block)
         return True
 
 
@@ -138,14 +139,14 @@ class Blockchain:
 
     def get_last_blockchain_value(self):
         """ Returns the last value of the current blockchain"""
-        if len(blockchain) < 1:
+        if len(self.blockchain) < 1:
             return None
-        return blockchain[-1]
+        return self.blockchain[-1]
 
 
     def print_blockchain_elements(self):
         #print(blockchain)
-        for (index, block) in enumerate(blockchain):
+        for (index, block) in enumerate(self.blockchain):
             print(f"output block [{index}]: ")
             print(block)
             print("\n")
@@ -158,7 +159,7 @@ class Blockchain:
             with the *recalculated hash with the *previous block """
 
 
-        for (index, block) in enumerate(blockchain):
+        for (index, block) in enumerate(self.blockchain):
             #skips the genesis block because there's nothing before it.
             #Also not necessary to validate genesis block
             if index == 0:
@@ -166,7 +167,7 @@ class Blockchain:
 
             #every block holds the hash of the previous block
             previous_hash = block['previous_hash']
-            recalc_previous_hash = self.hash_block(blockchain[index-1])
+            recalc_previous_hash = self.hash_block(self.blockchain[index-1])
             
             if previous_hash != recalc_previous_hash: #compares the current block with the previous block (hash comparison)
                 print(f"XXXXX\n prev_hash: {previous_hash} != {recalc_previous_hash} \nXXXXX")
@@ -208,8 +209,8 @@ while waiting_for_input:
     elif user_choice == "4":
         objBlockchain.print_vote_count()
     elif user_choice == "h":
-        if len(blockchain) >= 1:
-            blockchain[0] = {
+        if len(objBlockchain.blockchain) >= 1:
+            objBlockchain.blockchain[0] = {
                 'previous_hash': '',
                 'index': 0,
                 'votes': [{'vote_id': '00000', 'candidate': '1'}]

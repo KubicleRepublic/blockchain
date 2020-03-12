@@ -54,13 +54,13 @@ def vote_submission():
             # #print(response)
             # print("----------")
             return response.text            
-            return render_template('success.html',name = f.filename)
+            #return render_template('success.html',name = f.filename)
 
 
 @app.route("/home")
 #use uploadScreen.html
 def home():
-    return render_template('uploadScreen.html')
+    return render_template('home.html')
     vote_submission()
 
 @app.route('/success', methods =['POST'])

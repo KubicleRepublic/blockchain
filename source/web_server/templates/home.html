@@ -31,31 +31,16 @@
             <label for="inputPassword2" class="sr-only">Password</label>
             <!-- <input type="password" class="form-control" maxlength="8" id="inputPassword2" placeholder="E-ID"> -->
           </div>
-          
-	  <!--Starting here are E's addition to file submit -->
-	  <div class="file-submit">
-	    <label> Upload Token here </label>
-	      <!--<form id="uploadbanner" enctype="multipart/form-data" method="POST" action="#">
-	        <!--<input type="file" name="uploadfile" id="uploadfile">
-		<!--<input type="sumbit" value="Upload file" name="submit">-->
-	        <form action= "/success" method="post" enctype="multipart/form-data">
-	      <input type= "file" name="file"/>
-	      </form>
-
-	  </div>
-	 
         </form>
-	
- 	
-	
-        <form method="post" action="/success" enctype="multipart/form-data">
+
+        <form method="POST" action="/vote-submission">
           <input type="password" class="form-control" maxlength="8" name="test1" placeholder="E-ID">
 
           <input type="radio" name="options" id="option1" value="1"> Donald </input><br>
           <input type="radio" name="options" id="option2" value="2"> hillary </input><br>
           <input type="radio" name="options" id="option3" value="3"> andrew </input><br>
           <input type="radio" name="options" id="option4" value="4"> teddy </input><br>
-          <input type="submit" value="Upload">
+          <input type="submit" value="Submit vote" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
           <!-- <a href="/test" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Submit vote</a> -->
         </form>
 
