@@ -179,7 +179,7 @@ class Blockchain:
         pass
 
 
-waiting_for_input = True
+waiting_for_input = False
 
 while waiting_for_input:
     objBlockchain = Blockchain()
