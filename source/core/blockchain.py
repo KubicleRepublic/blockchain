@@ -280,7 +280,7 @@ def verify_votes():
     pass
 
 
-waiting_for_input = True
+waiting_for_input = False
 
 while waiting_for_input:
     print("\nPlease choose")
