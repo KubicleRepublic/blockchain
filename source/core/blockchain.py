@@ -74,7 +74,11 @@ class BlockChain:
 
         votes = { "Donald": total_votes_1, "Hillary": total_votes_2, "andrew": total_votes_3, "teddy": total_votes_4}
         
-        return str(len(blockchain[0]['votes']))
+        #return votes
+        return str(len(blockchain[0]['votes'])) original code
+
+        # return "hey hi how are ya"
+
         #votes["Donald"]
 
 
