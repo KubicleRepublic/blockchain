@@ -1,3 +1,5 @@
+from enum import Enum
+
 genesis_block = {
     'previous_hash': '',
     'index': 0,
@@ -21,45 +23,31 @@ owner = 'Luiz'
 candidates = set()
 
 
+class CandidateEnum(Enum):
+    none = 0
+    Trump = 1
+    Hillary = 2
+    Darth = 3
+    Putin = 4
+
 def hash_block(block):
     return '-'.join([str(block[key]) for key in block])
 
 
 def get_vote_count():
-    candidate_1 = [[vote['candidate'] for vote in block['votes'] if vote['candidate'] == 1] for block in blockchain]
     
-    total_votes_1 = 0
-    for candidate in candidate_1:
-        if len(candidate) > 0:
-             total_votes_1 += 1
-
-
-    candidate_2 = [[vote['candidate'] for vote in block['votes'] if vote['candidate'] == 2] for block in blockchain]
+    votes = dict()
     
-    total_votes_2 = 0
-    for candidate in candidate_2:
-        if len(candidate) > 0:
-             total_votes_2 += 1
+    for block in blockchain:
+        for vote in block['votes']:
+            key = vote['candidate'] #dictionary key i.e: 1, 2, 3 or 4 (represents the candidate #)
+            votes[key] = votes.get(key, 0) + 1 #votes.get check if the key/candidate has value otherwise sets the initial value to 0 (zero)
 
+    votes = { candidate}
+    for key, value in votes.items():
+        votes[key]
 
-    candidate_3 = [[vote['candidate'] for vote in block['votes'] if vote['candidate'] == 3] for block in blockchain]
-    
-    total_votes_3 = 0
-    for candidate in candidate_3:
-        if len(candidate) > 0:
-             total_votes_3 += 1
-
-
-    candidate_4 = [[vote['candidate'] for vote in block['votes'] if vote['candidate'] == 4] for block in blockchain]
-    
-    total_votes_4 = 0
-    for candidate in candidate_4:
-        if len(candidate) > 0:
-             total_votes_4 += 1
-    
-    votes = { "Donald": total_votes_1, "Hillary": total_votes_2 }
     return votes
-    #votes["Donald"]
 
 
 def get_last_blockchain_value():
@@ -109,7 +97,7 @@ Request input ID and candidate from user (Console input)
 def get_vote():
     """ Returns the input of the user (transaction amount in float format) """
     vote_id = input("Vote ID: ")
-    candidate = int(input("Choose a number: \n [1] Trump \n [2] Donald \n "))
+    candidate = int(input("Choose a number: \n [1] Donald \n [2] Hillary \n "))
     return (vote_id, candidate) #is gonna return a tuple
 
 
@@ -127,6 +115,10 @@ def print_blockchain_elements():
     else:
         print("-" * 20)
 
+def print_vote_count():
+    votes = get_vote_count()
+    for vote in votes:
+        print(f"candidate - {vote}: {votes[vote]} votes")
 
 def verify_chain():
     """ Compare the stored hash in a *given block 
@@ -149,14 +141,19 @@ def verify_chain():
     
     return True #if all the calculated hashes match then blockchain is valid 
 
+#TODO: implement verify votes
+def verify_votes():
+    pass
 
-waiting_for_input = False
+
+waiting_for_input = True
 
 while waiting_for_input:
     print("\nPlease choose")
     print("1: add a new vote")
     print("2: Mine block")
     print("3: output the blockchain blocks")
+    print("4: output vote count")
     print("h: Manipulate blocks!")
     print("q: quit")
     user_choice = get_user_choice()
@@ -173,6 +170,8 @@ while waiting_for_input:
             open_votes = [] #empty outstanding votes after creating the block
     elif user_choice == "3":
         print_blockchain_elements()
+    elif user_choice == "4":
+        print_vote_count()
     elif user_choice == "h":
         if len(blockchain) >= 1:
             blockchain[0] = {
@@ -189,7 +188,6 @@ while waiting_for_input:
         print_blockchain_elements()
         print("Invalid blockchain")
         break
-    print(get_vote_count())
 
 else:
     print("User left!")
