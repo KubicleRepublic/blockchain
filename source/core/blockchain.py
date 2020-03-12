@@ -22,8 +22,6 @@ owner = 'Luiz'
 
 candidates = set()
 
-class BlockChain:
-
 class CandidateEnum(Enum):
     none = 0
     Trump = 1
@@ -128,56 +126,6 @@ def get_user_choice():
     user_input = input("Your choice: ")
     return user_input
 
-        
-        # 1 - vote
-        # vote = { 
-        #     'vote_id': vote_id, 
-        #     'candidate': candidate
-        # }
-
-        # 2 - list of votes
-        # list_of_pending_votes = []
-        # list_of_pending_votes.append(vote)
-
-        # 3 - block with 4 votes
-        # block = {
-        #     'previous_hash': 'hash',
-        #     'index': 3,
-        #     'votes': list_of_pending_votes
-        # }
-
-        # 4 - blockchain
-        #blockchain.append(block)
-        
-        #vote -> lst_votes -> block(lst_votes) -> lst_blocks(block)
-
-        # lst_blocks #plural
-        #     block #singular
-        #         lst_votes #plural
-        #             vote #singular
-
-        total_votes_1 = 0
-        total_votes_2 = 0
-        total_votes_3 = 0
-        total_votes_4 = 0
-        for block in blockchain:
-            for vote in block['votes']:
-                if vote['candidate'] == 1:
-                    total_votes_1 += 1
-                if vote['candidate'] == 2:
-                    total_votes_2 += 1
-                if vote['candidate'] == 3:
-                    total_votes_3 += 1
-                if vote['candidate'] == 4:
-                    total_votes_4 += 1
-
-
-        votes = { "Donald": total_votes_1, "Hillary": total_votes_2, "andrew": total_votes_3, "teddy": total_votes_4}
-        
-        #return votes
-        return str(len(blockchain[0]['votes'])) original code
-
-        # return "hey hi how are ya"
 
 def print_vote_count():
     votes = get_vote_count()
@@ -280,7 +228,7 @@ def verify_votes():
     pass
 
 
-waiting_for_input = False
+waiting_for_input = True
 
 while waiting_for_input:
     print("\nPlease choose")
