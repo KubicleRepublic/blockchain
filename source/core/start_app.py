@@ -28,7 +28,7 @@ def ballot():
 
     # votes_getter = blockchain.get_vote_count()
     # print(f"this is the votes: {votes_getter}")
-    open_votes_qt = blockchain.add_vote(88888888, 1)
+    open_votes_qt = blockchain.add_vote(999999999, 1)
     print(f"this is open_votes: {open_votes_qt}")
 
     if open_votes_qt == 2:
@@ -42,7 +42,7 @@ def ballot():
 def get_votes():
     result = blockchain.get_vote_count()
     return result
-
+#changed from "/add_vote"
 
 @app.route("/", methods=["GET"])
 def get_home():
