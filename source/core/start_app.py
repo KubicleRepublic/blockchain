@@ -30,6 +30,7 @@ def ballot():
     print(f"this is open_votes: {open_votes_qt}")
     if 1 == 1 or open_votes_qt == 1:
         blockchainz.mine_block()
+            
     
     return response
 

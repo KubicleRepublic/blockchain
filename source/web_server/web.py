@@ -32,27 +32,13 @@ def vote_submission():
 
             url = 'http://localhost:8080/ballot'
 
-           # newcount = defaultdict(int)
-
-            EID = request.form["test1"]
+            EID = request.form["eid"]
             electee = request.form["options"]
-            #tokenfile = request.form["fileToUpload"]
-            #print(tokenfile)
-
-            # if electee == 'A':
-            #     newcount['Donald'] += 1
+           
             print(EID + " and vote is " + electee)
             Token = {'EID': EID,'candidate' : electee}
             response = requests.post(url, data = Token)
-                # print(newcount)
-            print("----------")
             
-            # print(EID + " and vote is " + electee)
-            # Token = {'EID': EID,'candidate' : electee}
-            # response = requests.post(url, data = Token)
-            # #response = "this is the answer from the node: " + x.text
-            # #print(response)
-            # print("----------")
             return response.text            
             #return render_template('success.html',name = f.filename)
 
