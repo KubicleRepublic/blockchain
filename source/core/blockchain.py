@@ -16,7 +16,7 @@ All open votes will be taken and added to a new block
 and then added to a blockchain whenever this block is mined
 
 """
-open_votes = [] #outstandinf transactions
+#open_votes = [] #outstandinf transactions
 owner = 'Luiz'
 
 candidates = set()
@@ -29,8 +29,12 @@ class CandidateEnum(Enum):
     Putin = 4
 
 class Blockchain:
-    blockchain = [genesis_block]
+
+    def __init__(self):
+        self.blockchain = [genesis_block]
+        self.open_votes = []
     
+
     def hash_block(self, block):
         return '-'.join([str(block[key]) for key in block])
 
@@ -93,8 +97,11 @@ class Blockchain:
             'vote_id': vote_id, 
             'candidate': candidate
         }
-        open_votes.append(vote)
-        return open_votes
+
+        if self.verify_vote(vote):
+            self.open_votes.append(vote)
+            return True
+        return False
 
     #will append the vote to the blockchain
     def mine_block(self):
@@ -103,14 +110,18 @@ class Blockchain:
 
         print(hashed_block)
 
+        copied_votes = self.open_votes[:]
         block = {
             'previous_hash': hashed_block,
             'index': len(self.blockchain),
-            'votes': open_votes
+            'votes': copied_votes
         }
         #TODO: validate if the votes are valid to be added
         #TODO: broadcast the event of addind a block
         self.blockchain.append(block)
+
+        #empty open_transactions
+        self.open_votes = []
         return True
 
 
@@ -176,8 +187,8 @@ class Blockchain:
         return True #if all the calculated hashes match then blockchain is valid 
 
     #TODO: implement verify votes
-    def verify_votes(self):
-        pass
+    def verify_vote(self, vote):
+        return True
 
 
 waiting_for_input = False
@@ -200,10 +211,10 @@ while waiting_for_input:
 
         #add vote to the blockchain
         objBlockchain.add_vote(vote_id=vote_id, candidate=candidate)
-        print(open_votes)
+        print(objBlockchain.open_votes)
     elif user_choice == "2":
         if objBlockchain.mine_block():
-            open_votes = [] #empty outstanding votes after creating the block
+            objBlockchain.open_votes = [] #empty outstanding votes after creating the block
     elif user_choice == "3":
         objBlockchain.print_blockchain_elements()
     elif user_choice == "4":
