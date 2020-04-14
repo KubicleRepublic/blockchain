@@ -1,4 +1,6 @@
 from enum import Enum
+import hashlib
+import json
 
 genesis_block = {
     'previous_hash': '',
@@ -36,7 +38,13 @@ class Blockchain:
     
 
     def hash_block(self, block):
-        return '-'.join([str(block[key]) for key in block])
+        strBlock = json.dumps(block) #converts the object block into a string that looks like json
+        strBlock = strBlock.encode() #encode into utf-8
+        byteHashBlock = hashlib.sha256(strBlock) #converts string into byte hash
+        hashedBlock = byteHashBlock.hexdigest() #converts hash in string format
+        
+        return hashedBlock
+        #return '-'.join([str(block[key]) for key in block])
 
 
     # 1 - vote
@@ -108,7 +116,7 @@ class Blockchain:
         last_block = self.blockchain[-1] #retrieve the previous block of the blockchain
         hashed_block = self.hash_block(last_block) #hash the previous block
 
-        print(hashed_block)
+        print("hashed_block: ", hashed_block)
 
         copied_votes = self.open_votes[:]
         block = {
@@ -143,7 +151,7 @@ class Blockchain:
 
     def print_vote_count(self):
         votes = self.get_vote_count()
-        print(f"robb: {votes}")
+        print(f"Votes: {votes}")
         for vote in votes:
             print(f"candidate - {vote}: {votes[vote]} votes")
 
@@ -210,11 +218,11 @@ while waiting_for_input:
         vote_id, candidate = tx_data #unpack the tuple 1st and 2nd value rescpetively
 
         #add vote to the blockchain
-        objBlockchain.add_vote(vote_id=vote_id, candidate=candidate)
-        print(objBlockchain.open_votes)
+        ret = objBlockchain.add_vote(vote_id=vote_id, candidate=candidate)
+        print("return: ", ret)
+        print("open_votes: ", objBlockchain.open_votes)
     elif user_choice == "2":
-        if objBlockchain.mine_block():
-            objBlockchain.open_votes = [] #empty outstanding votes after creating the block
+        objBlockchain.mine_block()
     elif user_choice == "3":
         objBlockchain.print_blockchain_elements()
     elif user_choice == "4":
