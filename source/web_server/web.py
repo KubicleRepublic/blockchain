@@ -19,7 +19,7 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 #This is where the UPLOADS folder is set
 #Will create script for this later to recognize path
-UPLOAD_FOLDER = "/home/e/Desktop/SAIT/Capstone/blockchain/source/web_server/UPLOADS"
+UPLOAD_FOLDER = "./UPLOADS"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 @app.route("/")
@@ -37,10 +37,10 @@ def vote_submission():
            
             print(EID + " and vote is " + electee)
             Token = {'EID': EID,'candidate' : electee}
-            response = requests.post(url, data = Token)
+            response = requests.post(url, json= Token)
             
-            return response.text            
-            #return render_template('success.html',name = f.filename)
+            #return response.text            
+            return results()
 
 
 @app.route("/home")
@@ -48,6 +48,12 @@ def vote_submission():
 def home():
     return render_template('home.html')
     vote_submission()
+
+
+@app.route("/results")
+def results():
+    return render_template('results.html')
+
 
 @app.route('/success', methods =['POST'])
 def success():
@@ -57,7 +63,7 @@ def success():
         electee = request.form["options"]
         print("vote is " + electee)
         Token = {'candidate' : electee}
-        response = requests.post(url, data = Token)
+        response = requests.post(url, json = Token)
 
         #This reads the "file" attribute
         f = request.files['file']

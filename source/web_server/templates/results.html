@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script>
+window.onload = function () {
+
+//Better to construct options first and then pass it as a parameter
+var options = {
+	animationEnabled: true,
+	title: {
+		text: "e-Election Results",                
+		fontColor: "Peru"
+	},	
+	axisY: {
+		tickThickness: 0,
+		lineThickness: 0,
+		valueFormatString: " ",
+		gridThickness: 0                    
+	},
+	axisX: {
+		tickThickness: 0,
+		lineThickness: 0,
+		labelFontSize: 18,
+		labelFontColor: "Peru"				
+	},
+	data: [{
+		indexLabelFontSize: 26,
+		toolTipContent: "<span style=\"color:#62C9C3\">{indexLabel}:</span> <span style=\"color:#CD853F\"><strong>{y}</strong></span>",
+		indexLabelPlacement: "inside",
+		indexLabelFontColor: "white",
+		indexLabelFontWeight: 600,
+		indexLabelFontFamily: "Verdana",
+		color: "#62C9C3",
+		type: "bar",
+		dataPoints: [
+			{ y: 21, label: "21%", indexLabel: "Trump" },
+			{ y: 25, label: "25%", indexLabel: "Hillary" },
+			{ y: 33, label: "33%", indexLabel: "Putin" },
+			{ y: 36, label: "36%", indexLabel: "Darth Vader" },
+			{ y: 42, label: "42%", indexLabel: "Trudeau" },
+		]
+	}]
+};
+
+$("#chartContainer").CanvasJSChart(options);
+}
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+</body>
+</html>
