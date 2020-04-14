@@ -18,20 +18,17 @@ blockchainz = Blockchain()
 
 @app.route("/ballot", methods=["POST"])
 def ballot():
-    data = request.get_data()
+    data = request.get_json()
     response = "This is the node response: {}".format(data)
-    print(f"node test {data}")
-    #convert the data.candidate into a num
-    #data.EID
-    #data.candidate
-    # blockchain.add_vote(data.EID, data.candidate)
-    
-    open_votes_qt = blockchainz.add_vote(1111, 1)
+
+    eid = data.get("EID")
+    candidate = data.get("candidate")
+
+    open_votes_qt = blockchainz.add_vote(eid, candidate)
     print(f"this is open_votes: {open_votes_qt}")
     if 1 == 1 or open_votes_qt == 1:
         blockchainz.mine_block()
             
-    
     return response
 
 
