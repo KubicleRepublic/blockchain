@@ -2,6 +2,8 @@
 <html>
 <head>
 <script>
+var votes = '{{ votes }}';
+alert(votes)
 window.onload = function () {
 
 //Better to construct options first and then pass it as a parameter
@@ -47,6 +49,9 @@ $("#chartContainer").CanvasJSChart(options);
 </script>
 </head>
 <body>
+
+	{{ votes.msg }}
+	{{votes.get("1")}}
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>

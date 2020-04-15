@@ -1,4 +1,3 @@
-from enum import Enum
 import hashlib
 import json
 
@@ -22,13 +21,6 @@ and then added to a blockchain whenever this block is mined
 owner = 'Luiz'
 
 candidates = set()
-
-class CandidateEnum(Enum):
-    none = 0
-    Trump = 1
-    Hillary = 2
-    Darth = 3
-    Putin = 4
 
 class Blockchain:
 
