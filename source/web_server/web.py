@@ -34,6 +34,11 @@ def home():
     return render_template('home.html')
 
 
+@app.route("/upload")
+def upload():
+    return render_template('uploadScreen.html')
+
+
 @app.route("/vote-submission", methods=['GET','POST'])
 def vote_submission():
     if request.method == 'POST':
