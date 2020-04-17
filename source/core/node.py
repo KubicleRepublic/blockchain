@@ -8,9 +8,6 @@ import datetime as date
 #from module import class
 from jsonEditor import JsonEditor
 
-#Loads the blockchain
-#This will be turned into a function
-#That scans for json_file.py and m.json
 
 import pprint
 import json
@@ -19,6 +16,7 @@ import requests
 
 from flask import jsonify
 
+
 class Node:
 
     nodes = [
@@ -26,19 +24,18 @@ class Node:
         "127.0.0.1:8081"
     ]
 
-    home = str(Path.home())
+    #home = str(Path.home())
 
-    def __init__(self, nodename="node"):
-        self.nodeDIR = self.home + "/" + nodeName + "/"
-        self.kubicleJson = JsonEditor(file_path=self.nodeDIR)
-        self.File = self.kubicleJson.load()        
+    def __init__(self, nodeName="node"):
+        self.kubicleJson = JsonEditor(file_add_folder=nodeName, file_name="m.json")
+        self.File = self.kubicleJson.load()
         
 
     def save_data(self, data):
         self.kubicleJson.write(data)
 
-    
-    def config():
+
+    def config(self):
         #This can access the conn.conf file
         #may read all accessible IPs
         pass
@@ -61,3 +58,8 @@ class Node:
             print(response.json)
             print("---------")
         return "Broadcasted successfully"
+
+node = Node(nodeName="core/node8080")
+#print("File loaded: ", node.File)
+
+print(node.File["chain"][0]["VIDh"])

@@ -39,33 +39,6 @@ class Blockchain:
         #return '-'.join([str(block[key]) for key in block])
 
 
-    # 1 - vote
-    # vote = { 
-    #     'vote_id': 1111, 
-    #     'candidate': 2
-    # }
-
-    # 2 - list of votes
-    # list_of_pending_votes = []
-    # list_of_pending_votes.append(vote)
-
-    # 3 - block with 4 votes
-    # block = {
-    #     'previous_hash': 'hash',
-    #     'index': 3,
-    #     'votes': list_of_pending_votes
-    # }
-
-    # 4 - blockchain
-    #blockchain.append(block)
-
-    #vote -> lst_votes -> block(lst_votes) -> lst_blocks(block)
-
-    # lst_blocks #plural
-    #     block #singular
-    #         lst_votes #plural
-    #             vote #singular
-
     def get_vote_count(self):
         
         counter = dict()
@@ -102,6 +75,7 @@ class Blockchain:
             self.open_votes.append(vote)
             return True
         return False
+
 
     #will append the vote to the blockchain
     def mine_block(self):
@@ -185,6 +159,7 @@ class Blockchain:
                 return False
         
         return True #if all the calculated hashes match then blockchain is valid 
+
 
     #TODO: implement verify votes
     def verify_vote(self, vote):
