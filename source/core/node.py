@@ -16,7 +16,6 @@ import requests
 
 from flask import jsonify
 
-
 class Node:
 
     nodes = [
@@ -28,11 +27,8 @@ class Node:
 
     def __init__(self, nodeName="node"):
         self.kubicleJson = JsonEditor(file_add_folder=nodeName, file_name="m.json")
+        self.kubicleJson.create_dir()
         self.File = self.kubicleJson.load()
-        
-
-    def save_data(self, data):
-        self.kubicleJson.write(data)
 
 
     def config(self):
@@ -59,7 +55,10 @@ class Node:
             print("---------")
         return "Broadcasted successfully"
 
-node = Node(nodeName="core/node8080")
-#print("File loaded: ", node.File)
 
-print(node.File["chain"][0]["VIDh"])
+if __name__ == '__main__':        
+    node = Node(nodeName="core/node8080")
+    #print("File loaded: ", node.File)
+
+    if "alert" not in node.File:
+        print(node.File["chain"][0]["VIDh"])
