@@ -16,10 +16,12 @@ host_url = None
 #principals = Principal(app)
 #admin_permission = Permission(RoleNeed('Admin'))
 
+#sec test for admin permissions
+
 # @app.route('/admin')
 # @admin_permission.require()
 # def do_admin_index():
-# return Response('only if you are admin')
+# return Response('only accessible if you are an admin')
 
 #This is where the UPLOADS folder is set
 #Will create script for this later to recognize path
@@ -59,11 +61,6 @@ def vote_submission():
 def results(msg=None):
     
     response = get_votes()
-    # print("candidate: ", response.get("1"))
-
-    # print ("The enum members are : ")
-    # for cand in (candidates):
-    #     print(cand)
     if not msg == None:
         response["msg"] = msg 
 
