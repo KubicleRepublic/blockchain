@@ -9,7 +9,8 @@ from argparse import ArgumentParser
 app = Flask(__name__)
 CORS(app) #CORS allows other nodes to communicate between each other
 
-blockchainz = Blockchain()
+blockchainz = None
+node = None
 
 #default host and port
 
@@ -49,40 +50,42 @@ def get_ui():
     return send_from_directory('ui', 'node.html')
 
 
-@app.route("/broadcast", methods = ['POST'])
-def broadcast():
+@app.route("/broadcast-block", methods = ['POST'])
+def broadcast_block():
     #gets the data that was sent
     data = request.get_json(force=True)
     print(data)
-    print("test")
+    print("broadcasting....")
 
     if not data:
         response = {"msg": "No data"}
         return jsonify(response), 400
     
-    #TODO: 
-    # check if the save_data was successful
-    # return error msg
-    #  
-    global node
-    node = Node("node" + app.args.port)
-    node.save_data(data)
+    if 'block' not in data:
+        response = {'message': 'Some data is missing.'}
+        return jsonify(response), 400
+    block = data['block']
 
-    #if success:
-    response = {
-        'message': 'Successfully saved.'
-    }
-    return jsonify(response), 201
-    # else:
-    #     response = {
-    #         'message': 'failed to save.'
-    #     }
-    #     return jsonify(response), 500
+    print("block: ", block)
+    if block['index'] == blockchainz.blockchain[-1]['index'] + 1:
+        if blockchainz.add_block(block):
+            response = {'message': 'Block added'}
+            return jsonify(response), 201
+        else:
+            response = {'message': 'Block seems invalid.'}
+            return jsonify(response), 409
+    elif block['index'] > blockchainz.blockchain[-1]['index']:
+        response = {
+            'message': 'Blockchain seems to differ from local blockchain.'}
+        blockchainz.resolve_conflicts = True
+        return jsonify(response), 200
+    else:
+        response = {
+            'message': 'Blockchain seems to be shorter, block not added'}
+        return jsonify(response), 409
 
 
 if __name__ == '__main__':
-    blockchainz = Blockchain()
-    
     app.debug = True
     
     default_host = '0.0.0.0'
@@ -95,6 +98,7 @@ if __name__ == '__main__':
     
     app.args = parser.parse_args()
 
-    #host = os.environ.get('IP', '0.0.0.0')
-    #port = int(os.environ.get('PORT', 8080))
+    nodeName = app.args.port
+    blockchainz = Blockchain(nodeId=nodeName)
+
     app.run(host=app.args.host, port=app.args.port)
