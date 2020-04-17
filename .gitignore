@@ -106,9 +106,11 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+linux_env/
 
 .vscode
 __pycache__
+*.code-workspace
 
 # Spyder project settings
 .spyderproject
@@ -127,3 +129,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+#Nodes folder
+nodes/
