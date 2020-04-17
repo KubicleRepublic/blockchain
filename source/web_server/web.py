@@ -26,7 +26,9 @@ host_url = None
 
 #This is where the UPLOADS folder is set
 #Will create script for this later to recognize path
-UPLOAD_FOLDER = "./UPLOADS"
+
+SOURCE_DIRECTORY = os.path.dirname(os.path.dirname(__file__)) #absolut path until source dir
+UPLOAD_FOLDER = SOURCE_DIRECTORY + "/web_server/UPLOADS"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
@@ -80,27 +82,29 @@ def results(msg=None):
     return render_template('results.html', results=results, msg=msg)
 
 
-@app.route('/success', methods =['POST'])
+@app.route('/success', methods =['GET', 'POST'])
 def success():
-    if request.method == 'POST':
-        #This is reading what candidate was voted for
-        url =  host_url + '/ballot'
-        electee = request.form["options"]
-        print("vote is " + electee)
-        Token = {'candidate' : electee}
-        response = requests.post(url, json = Token)
-
-        #This reads the "file" attribute
-        f = request.files['file']
-
-        #This works, but it saves in current dir where script is
-        #f.save(f.filename)
-
-        #This Saves script in the UPLOAD_FOLDER
-        f.save(os.path.join(app.config['UPLOAD_FOLDER'], f.filename))
-        
-        return render_template("success.html", name = f.filename), response.text
     
+    url = host_url + '/ballot'
+
+    electee = request.form["options"]
+    print(electee)
+    
+    # Token = {'EID': EID,'candidate' : electee}
+    # response = requests.post(url, json= Token)
+
+    #This reads the "file" attribute
+    f = request.files['file']
+
+    #This works, but it saves in current dir where script is
+    #f.save(f.filename)
+
+    #This Saves script in the UPLOAD_FOLDER
+    print("path: ", app.config['UPLOAD_FOLDER'])
+    f.save(os.path.join(app.config['UPLOAD_FOLDER'], f.filename))
+    
+    return render_template("success.html", name=f.filename)
+
 
 def get_votes():
     url = host_url + '/get_votes'
