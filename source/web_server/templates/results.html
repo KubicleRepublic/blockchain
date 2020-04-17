@@ -1,9 +1,13 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
 <script>
-var votes = '{{ votes }}';
-alert(votes)
+var results = {{ results | safe }};
+//alert(results)
 window.onload = function () {
 
 //Better to construct options first and then pass it as a parameter
@@ -44,16 +48,36 @@ var options = {
 	}]
 };
 
+options.data[0].dataPoints = results
+
 $("#chartContainer").CanvasJSChart(options);
 }
 </script>
 </head>
 <body>
 
-	{{ votes.msg }}
-	{{votes.get("1")}}
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+
+{% if not results %}
+    <p></p>
+	  <p class="bg-info display-4 text-center">No votes were casted!</p>
+{% endif %}
+
+
+
+{% if msg %}
+    <p></p>
+	  <p class="bg-success display-4 text-center">{{ msg }}</p>
+{% endif %}
+
+
 <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
 </body>
 </html>

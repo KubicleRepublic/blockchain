@@ -4,12 +4,13 @@ from werkzeug.utils import secure_filename
 import json
 import os
 import requests
-#from helper import candidates
-
+from functools import reduce
+from candidates import CandidateEnum
 
 #from OpenSSL import SSL
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
+
 
 host_url = None
 
@@ -62,9 +63,21 @@ def results(msg=None):
     
     response = get_votes()
     if not msg == None:
-        response["msg"] = msg 
+        response["msg"] = msg
 
-    return render_template('results.html', votes=response)
+    results = []
+    if response:
+        total_ballot = reduce(lambda votes_sum, value: votes_sum + value if type(value) is int else votes_sum + 0, response.values(), 0)
+        
+        for x in range(1,5):
+            candidate = CandidateEnum(x).name
+            total_votes = response.get(str(x), 0)
+            vote_percent = round((total_votes / total_ballot) * 100, 2)
+        
+            result = { 'y': vote_percent, 'label': (str(vote_percent) + "%"), 'indexLabel': candidate }
+            results.append(result)
+    
+    return render_template('results.html', results=results, msg=msg)
 
 
 @app.route('/success', methods =['POST'])
