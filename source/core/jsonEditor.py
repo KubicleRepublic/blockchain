@@ -1,9 +1,11 @@
 import json
 import os
 from os import path
+import errno
 
 SOURCE_DIRECTORY = os.path.dirname(os.path.dirname(__file__)) #absolut path until source dir
 FILE_NAME = "m.json"  
+
 
 class JsonEditor:
 
@@ -17,8 +19,24 @@ class JsonEditor:
 
         if file_add_folder:
             self.file_path = file_path + "/" + file_add_folder
+        self.full_file_path_name = self.file_path + "/" + self.file_name
 
-   
+
+    def create_dir(self, full_file_path=None):
+        if full_file_path == None:
+            full_file_path = self.full_file_path_name
+
+        if not os.path.exists(os.path.dirname(full_file_path)):
+            try:
+                os.makedirs(os.path.dirname(full_file_path))
+            except OSError as exc: # Guard against race condition
+                if exc.errno != errno.EEXIST:
+                    raise
+
+        with open(full_file_path, "w") as f:
+            f.write("")
+            
+
     def load(self):
         file_path_name = self.file_path + "/" + self.file_name
 
@@ -38,11 +56,15 @@ class JsonEditor:
                 file_object.seek(0)  # it may be redundant but it does not hurt
                 data = json.load(file_object)
                 return data
+
     
-    def write(self,data):
+    def write(self,data, isJson=True):
         with open(self.file_path + self.file_name, 'w', encoding='utf-8') as file_object:
             # store file data in object
-            json.dump(data, file_object, ensure_ascii=False, indent=4)
+            if isJson:
+                file_object.write(json.dump(data, file_object, ensure_ascii=False, indent=4))
+            else:
+                file_object.write(data)
 
 # myData = kubicleJson.load()                        
 # #print(data.chain)
