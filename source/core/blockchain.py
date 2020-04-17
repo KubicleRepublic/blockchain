@@ -1,5 +1,8 @@
 import hashlib
 import json
+from jsonEditor import JsonEditor
+
+import requests
 
 genesis_block = {
     'previous_hash': '',
@@ -22,12 +25,81 @@ owner = 'Luiz'
 
 candidates = set()
 
+NODES = [
+    "8081",
+    "8082"
+]
+
 class Blockchain:
 
-    def __init__(self):
+    def __init__(self, nodeId):
+        self.__peer_nodes = NODES
         self.blockchain = [genesis_block]
         self.open_votes = []
+        self.nodeId = nodeId
+        self.kubicleJson = JsonEditor()
+        self.load_data()
+        self.resolve_conflicts = False
     
+    def load_data(self):
+        try:
+            f_path = self.kubicleJson.file_path + "/core/nodes/blockchain-{}.json".format(self.nodeId)
+            
+            with open(f_path , mode='r') as f:
+                file_content = f.readlines()
+                self.blockchain = json.loads(file_content[0][:-1])
+        except (IOError, IndexError):
+            pass
+        finally:
+            pass
+
+
+    def save_data(self):
+        try:
+            f_path = self.kubicleJson.file_path + "/core/nodes/blockchain-{}.json".format(self.nodeId)
+            
+            self.kubicleJson.create_dir(f_path)
+            
+            with open(f_path , mode='w') as f:
+                f.write(json.dumps(self.blockchain))
+                f.write('\n')
+                f.write(json.dumps(self.open_votes))
+        except IOError:
+            print('Saving failed!')
+
+
+    def add_block(self, block):
+        """Add a block which was received via broadcasting to the localb
+        lockchain."""
+        
+        #TODO: validate block already exists
+        #TODO: validate digitally signed
+        #TODO: decrypt data
+        
+        hashes_match = self.hash_block(self.blockchain[-1]) == block['previous_hash']
+        if not hashes_match:
+            return False
+        
+        votes = []
+        for vt in block['votes']:
+            vote = { 
+                'vote_id': vt['vote_id'], 
+                'candidate': vt['candidate']
+            }
+            votes.append(vote)
+
+        # Create a Block object
+        broadcasted_block = {
+            'previous_hash': block['previous_hash'],
+            'index': block['index'],
+            'votes': votes
+        }
+
+        self.blockchain.append(broadcasted_block)
+        
+        self.save_data()
+        return True
+
 
     def hash_block(self, block):
         strBlock = json.dumps(block) #converts the object block into a string that looks like json
@@ -96,7 +168,27 @@ class Blockchain:
 
         #empty open_transactions
         self.open_votes = []
+
+        self.save_data()
+        self.broadcast_block(block)
         return True
+
+
+    def broadcast_block(self, block):
+        for node in self.__peer_nodes:
+            url = 'http://localhost:{}/broadcast-block'.format(node)
+
+            converted_block = block.copy()
+            #try:
+            response = requests.post(url, json={'block': converted_block})
+            if response.status_code == 400 or response.status_code == 500:
+                print('Block declined, needs resolving')
+            if response.status_code == 409:
+                self.resolve_conflicts = True
+            #except requests.exceptions.ConnectionError:
+            #    continue
+            
+            return block
 
 
     """
@@ -169,7 +261,7 @@ class Blockchain:
 waiting_for_input = False
 
 while waiting_for_input:
-    objBlockchain = Blockchain()
+    objBlockchain = Blockchain("NODE_TX")
 
     print("\nPlease choose")
     print("1: add a new vote")
